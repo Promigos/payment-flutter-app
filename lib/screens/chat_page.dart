@@ -30,6 +30,7 @@ class _ChatPageState extends State<ChatPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return const Card(
                     elevation: 5,
+                    //TODO: Style card and add space to separate left/right messsage
                     child: ListTile(
                       title: Text("MESSAGE"),
                     ),

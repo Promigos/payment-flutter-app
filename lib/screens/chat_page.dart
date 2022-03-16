@@ -21,6 +21,27 @@ class _ChatPageState extends State<ChatPage> {
             icon: const Icon(
               Icons.arrow_back_ios_outlined,
             )),
+        actions: [
+          PopupMenuButton(
+            icon: const Icon(Icons.more_vert),
+            //don't specify icon if you want 3 dot menu
+            itemBuilder: (context) => [
+              const PopupMenuItem<int>(
+                value: 0,
+                child: Text(
+                  "Block User",
+                ),
+              ),
+              const PopupMenuItem<int>(
+                value: 1,
+                child: Text(
+                  "View Profile",
+                ),
+              ),
+            ],
+            onSelected: (item) => {print(item)},
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -54,8 +75,7 @@ class _ChatPageState extends State<ChatPage> {
                     child: Card(
                       elevation: 5,
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20),
+                        padding: const EdgeInsets.only(left: 20),
                         child: TextField(
                           decoration: InputDecoration(
                               hintText: "Send message...",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +18,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
                 onPressed: () {},
+                splashRadius: 20,
                 icon: const Icon(
                   Icons.qr_code,
                 ))
@@ -39,9 +41,22 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          HomeCard(title: "Users", icon: Icons.supervisor_account_sharp,),
-                          HomeCard(title: "Calculator", icon: Icons.calculate_outlined,),
+                        children: [
+                          HomeCard(
+                            title: "Users",
+                            icon: Icons.supervisor_account_sharp,
+                            onClick: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Users()),
+                              );
+                            },
+                          ),
+                          HomeCard(
+                              title: "Calculator",
+                              icon: Icons.calculate_outlined,
+                              onClick: () {}),
                         ],
                       ),
                     ),
@@ -50,9 +65,15 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          HomeCard(title: "Analytics", icon: Icons.analytics,),
-                          HomeCard(title: "Profile", icon: Icons.person,),
+                        children: [
+                          HomeCard(
+                              title: "Analytics",
+                              icon: Icons.analytics,
+                              onClick: () {}),
+                          HomeCard(
+                              title: "Profile",
+                              icon: Icons.person,
+                              onClick: () {}),
                         ],
                       ),
                     )
@@ -65,19 +86,3 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 }
-
-// ListView.builder(
-// itemBuilder: (BuildContext context, int index) {
-// return const Padding(
-// padding: EdgeInsets.all(4),
-// child: Card(
-// child: ListTile(
-// title: Text("User Name"),
-// subtitle: Text("Phone Number"),
-// ),
-// elevation: 10,
-// ),
-// );
-// },
-// itemCount: 10,
-// ),

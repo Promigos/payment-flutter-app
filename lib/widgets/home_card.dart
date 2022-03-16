@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
-  const HomeCard({Key? key, required this.title, required this.icon})
+  const HomeCard({Key? key, required this.title, required this.icon, required this.onClick})
       : super(key: key);
   final String title;
   final IconData icon;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +26,14 @@ class HomeCard extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(title),
+                    child: Text(title, style: const TextStyle(
+                      fontSize: 18
+                    ),),
                   )
                 ],
               ),
             ),
-            onTap: () {},
+            onTap: onClick,
           ),
         ),
       ),

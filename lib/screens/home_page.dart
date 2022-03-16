@@ -33,6 +33,12 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {},
                 splashRadius: 20,
                 icon: const Icon(
+                  Icons.settings,
+                )),
+            IconButton(
+                onPressed: () {},
+                splashRadius: 20,
+                icon: const Icon(
                   Icons.logout,
                 ))
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/scan_qr_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
 
@@ -17,7 +18,13 @@ class _HomePageState extends State<HomePage> {
           title: const Text('Home'),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const QRScannerView()),
+                  );
+                },
                 splashRadius: 20,
                 icon: const Icon(
                   Icons.qr_code,

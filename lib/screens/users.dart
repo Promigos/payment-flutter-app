@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/chat_page.dart';
 
 class Users extends StatefulWidget {
   const Users({Key? key}) : super(key: key);
@@ -24,12 +25,21 @@ class _UsersState extends State<Users> {
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return const Padding(
-            padding: EdgeInsets.all(4),
+          return Padding(
+            padding: const EdgeInsets.all(4),
             child: Card(
               child: ListTile(
-                title: Text("User Name"),
-                subtitle: Text("Phone Number"),
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChatPage()),
+                  );
+                },
+                title: const Text("User Name"),
+                subtitle: const Text("Phone Number"),
+                trailing:
+                    ElevatedButton(onPressed: () {}, child: const Text("PAY")),
               ),
               elevation: 5,
             ),

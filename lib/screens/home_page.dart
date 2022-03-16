@@ -21,6 +21,12 @@ class _HomePageState extends State<HomePage> {
                 splashRadius: 20,
                 icon: const Icon(
                   Icons.qr_code,
+                )),
+            IconButton(
+                onPressed: () {},
+                splashRadius: 20,
+                icon: const Icon(
+                  Icons.logout,
                 ))
           ],
         ),
@@ -28,7 +34,61 @@ class _HomePageState extends State<HomePage> {
           children: [
             //TODO: Wallet balance, add funds
             Expanded(
-              child: Container(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: Card(
+                          elevation: 10,
+                          color: Colors.blue,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Balance",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white.withOpacity(0.8))),
+                              ),
+                              Text("₹ 1000000",
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.yellow.shade500, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: TextButton(
+                          child: const Text("ADD CREDITS",
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.blue)),
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(15)),
+                              foregroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.red),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Colors.blue)))),
+                          onPressed: () {}),
+                    ),
+                  ),
+                ],
+              ),
             ),
             //TODO: Calculator, friends list, analytics, profile
             Expanded(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/models/chat_model.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -8,6 +9,41 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  List<ChatModel> messages = [];
+  final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    messages.add(
+
+        //TODO: Remove test data after implementing backend logic
+        ChatModel(message: "HEY", date: "", sender: "MY_ID", receiver: ""));
+    messages.add(
+        ChatModel(message: "Hello", date: "", sender: "", receiver: "MY_ID"));
+    messages.add(ChatModel(
+        message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: "",
+        sender: "MY_ID",
+        receiver: ""));
+
+    messages.add(ChatModel(
+        message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        date: "",
+        sender: "",
+        receiver: "MY_ID"));
+  }
+
+  _scrollToBottom() {
+    _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent + 100,
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,16 +83,14 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: 20,
-                itemBuilder: (BuildContext context, int index) {
-                  return const Card(
-                    elevation: 5,
-                    //TODO: Style card and add space to separate left/right messsage
-                    child: ListTile(
-                      title: Text("MESSAGE"),
-                    ),
-                  );
-                }),
+              controller: _scrollController,
+              itemCount: messages.length,
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              itemBuilder: (context, index) {
+                return messages[index].messageWidget;
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(6),
@@ -77,12 +111,27 @@ class _ChatPageState extends State<ChatPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: TextField(
+                          controller: _controller,
                           decoration: InputDecoration(
                               hintText: "Send message...",
+                              contentPadding: const EdgeInsets.only(top: 15),
                               suffixIcon: IconButton(
                                 icon: const Icon(Icons.send),
                                 splashRadius: 20,
-                                onPressed: () {},
+                                onPressed: () {
+                                  String message = _controller.text;
+                                  if (message.isNotEmpty) {
+                                    setState(() {
+                                      messages.add(ChatModel(
+                                          message: message,
+                                          date: "date",
+                                          sender: "MY_ID",
+                                          receiver: ""));
+                                      _controller.clear();
+                                    });
+                                    _scrollToBottom();
+                                  }
+                                },
                               ),
                               hintStyle: const TextStyle(color: Colors.black54),
                               border: InputBorder.none),

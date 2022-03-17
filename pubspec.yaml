@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   qr_code_scanner: ^0.7.0
+  auto_size_text:
   flutter:
     sdk: flutter
 

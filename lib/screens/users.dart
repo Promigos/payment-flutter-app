@@ -29,6 +29,11 @@ class _UsersState extends State<Users> {
             padding: const EdgeInsets.all(4),
             child: Card(
               child: ListTile(
+                leading: const CircleAvatar(
+                  child: Text(
+                    "S",
+                  ),
+                ),
                 onTap: (){
                   Navigator.push(
                     context,

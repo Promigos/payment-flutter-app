@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
 
   _scrollToBottom() {
     _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent + 100,
+        _scrollController.position.maxScrollExtent + 1000,
         duration: const Duration(seconds: 1),
         curve: Curves.fastOutSlowIn);
   }

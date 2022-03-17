@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payment_app/screens/home_page.dart';
+import 'package:payment_app/screens/start_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       //TODO: change to login / signup page and send to home page if token found
-      home: const HomePage(),
+      home: const StartPage(),
     );
   }
 }

@@ -23,10 +23,10 @@ class _SignUpState extends State<SignUp> {
     return Stack(
         children:[
           Container(
-            color: colors.scaffoldColor,
+            // color: colors.scaffoldColor,
           ),
           Scaffold(
-              backgroundColor: Colors.transparent,
+              // backgroundColor: Colors.transparent,
               body: CustomSliverView(
                 columnList: [
                   Expanded(
@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
                                 Text(
                                   'Welcome',
                                   style: GoogleFonts.nunito(
-                                    color: colors.primaryTextColor,
+                                    // color: colors.primaryTextColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
                                   ),
@@ -63,7 +63,7 @@ class _SignUpState extends State<SignUp> {
                                     child: Text(
                                       'Register with APP NAME',
                                       style: GoogleFonts.nunito(
-                                        color: colors.primaryTextColor,
+                                        // color: colors.primaryTextColor,
                                         fontSize: 16,
                                       ),
                                     ))
@@ -75,8 +75,7 @@ class _SignUpState extends State<SignUp> {
                           padding: constants.textFieldPadding,
                           child: TextFormField(
                               // controller: _nameController,
-                              style: GoogleFonts.montserrat(
-                                  color: colors.primaryTextColor),
+                              style: GoogleFonts.montserrat(),
                               validator: (value) {
                                 if (value == "" || value == null) {
                                   return "Please enter a valid name";
@@ -87,18 +86,16 @@ class _SignUpState extends State<SignUp> {
                               decoration: InputDecoration(
                                 label: Text('Name',
                                     style: GoogleFonts.nunito(
-                                        color: colors.textBoxTextColor,
+                                        // color: colors.textBoxTextColor,
                                         fontSize: 17)),
                                 filled: true,
                                 hintText: 'Enter your name',
-                                hintStyle: GoogleFonts.poppins(
-                                    color:
-                                    colors.textBoxTextColor),
+                                hintStyle: GoogleFonts.poppins(),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
-                                fillColor: colors.textBoxColor,
-                                focusColor: colors.textBoxColor,
+                                // fillColor: colors.textBoxColor,
+                                // focusColor: colors.textBoxColor,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
@@ -108,8 +105,7 @@ class _SignUpState extends State<SignUp> {
                           padding: constants.textFieldPadding,
                           child: TextFormField(
                               // controller: _nameController,
-                              style: GoogleFonts.montserrat(
-                                  color: colors.primaryTextColor),
+                              style: GoogleFonts.montserrat(),
                               validator: (value) {
                                 if (value == "" || value == null) {
                                   return "Please enter a valid phone number";
@@ -120,18 +116,15 @@ class _SignUpState extends State<SignUp> {
                               decoration: InputDecoration(
                                 label: Text('Phone number',
                                     style: GoogleFonts.nunito(
-                                        color: colors.textBoxTextColor,
                                         fontSize: 17)),
                                 filled: true,
                                 hintText: 'Enter your phone number',
-                                hintStyle: GoogleFonts.poppins(
-                                    color:
-                                    colors.textBoxTextColor),
+                                hintStyle: GoogleFonts.poppins(),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
-                                fillColor: colors.textBoxColor,
-                                focusColor: colors.textBoxColor,
+                                // fillColor: colors.textBoxColor,
+                                // focusColor: colors.textBoxColor,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
@@ -141,8 +134,7 @@ class _SignUpState extends State<SignUp> {
                           padding: constants.textFieldPadding,
                           child: TextFormField(
                               // controller: _nameController,
-                              style: GoogleFonts.montserrat(
-                                  color: colors.primaryTextColor),
+                              style: GoogleFonts.montserrat(),
                               validator: (value) {
                                 if (value == "" || value == null) {
                                   return "Please enter a valid email id";
@@ -153,89 +145,21 @@ class _SignUpState extends State<SignUp> {
                               decoration: InputDecoration(
                                 label: Text('Email ID',
                                     style: GoogleFonts.nunito(
-                                        color: colors.textBoxTextColor,
                                         fontSize: 17)),
                                 filled: true,
                                 hintText: 'Enter your Email ID',
-                                hintStyle: GoogleFonts.poppins(
-                                    color:
-                                    colors.textBoxTextColor),
+                                hintStyle: GoogleFonts.poppins(),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
-                                fillColor: colors.textBoxColor,
-                                focusColor: colors.textBoxColor,
+                                // fillColor: colors.textBoxColor,
+                                // focusColor: colors.textBoxColor,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
                               )),
                         ),
-                        // Padding(
-                        //   padding: constants.textFieldPadding,
-                        //   child: TextFormField(
-                        //     // controller: _nameController,
-                        //       style: GoogleFonts.montserrat(
-                        //           color: colors.primaryTextColor),
-                        //       validator: (value) {
-                        //         if (value == "" || value == null) {
-                        //           return "Please enter a valid password";
-                        //         } else {
-                        //           return null;
-                        //         }
-                        //       },
-                        //       decoration: InputDecoration(
-                        //         label: Text('Password',
-                        //             style: GoogleFonts.nunito(
-                        //                 color: colors.textBoxTextColor,
-                        //                 fontSize: 17)),
-                        //         filled: true,
-                        //         hintText: 'Enter your Password',
-                        //         hintStyle: GoogleFonts.poppins(
-                        //             color:
-                        //             colors.textBoxTextColor),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //             borderRadius: BorderRadius.circular(5)),
-                        //         fillColor: colors.textBoxColor,
-                        //         focusColor: colors.textBoxColor,
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //             borderRadius: BorderRadius.circular(5)),
-                        //       )),
-                        // ),
-                        // Padding(
-                        //   padding: constants.textFieldPadding,
-                        //   child: TextFormField(
-                        //     // controller: _nameController,
-                        //       style: GoogleFonts.montserrat(
-                        //           color: colors.primaryTextColor),
-                        //       validator: (value) {
-                        //         if (value == "" || value == null) {
-                        //           return "Please re-enter password";
-                        //         } else {
-                        //           return null;
-                        //         }
-                        //       },
-                        //       decoration: InputDecoration(
-                        //         label: Text('Re-enter Password',
-                        //             style: GoogleFonts.nunito(
-                        //                 color: colors.textBoxTextColor,
-                        //                 fontSize: 17)),
-                        //         filled: true,
-                        //         hintText: 'Enter your password again',
-                        //         hintStyle: GoogleFonts.poppins(
-                        //             color:
-                        //             colors.textBoxTextColor),
-                        //         focusedBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //             borderRadius: BorderRadius.circular(5)),
-                        //         fillColor: colors.textBoxColor,
-                        //         focusColor: colors.textBoxColor,
-                        //         enabledBorder: OutlineInputBorder(
-                        //             borderSide: BorderSide.none,
-                        //             borderRadius: BorderRadius.circular(5)),
-                        //       )),
-                        // ),
+
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
                           child: Row(
@@ -254,24 +178,21 @@ class _SignUpState extends State<SignUp> {
                                         return null;
                                       }
                                     },
-                                    style: GoogleFonts.nunito(
-                                        color: colors.primaryTextColor, fontSize: 17),
+                                    style: GoogleFonts.nunito(fontSize: 17),
 
                                     decoration: InputDecoration(
                                       label: Text('Password',
                                           style: GoogleFonts.nunito(
-                                              color: colors.textBoxTextColor,
+                                              // color: colors.textBoxTextColor,
                                               fontSize: 17)),
                                       filled: true,
                                       hintText: 'Enter password',
-                                      hintStyle: GoogleFonts.poppins(
-                                          color:
-                                          colors.textBoxTextColor),
+                                      hintStyle: GoogleFonts.poppins(),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),
-                                      fillColor: colors.textBoxColor,
-                                      focusColor: colors.textBoxColor,
+                                      // fillColor: colors.textBoxColor,
+                                      // focusColor: colors.textBoxColor,
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),
@@ -291,24 +212,21 @@ class _SignUpState extends State<SignUp> {
                                         return null;
                                       }
                                     },
-                                    style: GoogleFonts.nunito(
-                                        color: colors.primaryTextColor, fontSize: 17),
+                                    style: GoogleFonts.nunito(fontSize: 17),
 
                                     decoration: InputDecoration(
                                       label: Text('Re-enter Password',
                                           style: GoogleFonts.nunito(
-                                              color: colors.textBoxTextColor,
+                                              // color: colors.textBoxTextColor,
                                               fontSize: 17)),
                                       filled: true,
                                       hintText: 'Re-enter Password',
-                                      hintStyle: GoogleFonts.poppins(
-                                          color:
-                                          colors.textBoxTextColor),
+                                      hintStyle: GoogleFonts.poppins(),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),
-                                      fillColor: colors.textBoxColor,
-                                      focusColor: colors.textBoxColor,
+                                      // fillColor: colors.textBoxColor,
+                                      // focusColor: colors.textBoxColor,
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),
@@ -323,8 +241,8 @@ class _SignUpState extends State<SignUp> {
                           child: Align(
                             alignment: Alignment.topRight,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(primary: colors.alternateButtonColor),
-                              child: Text('Send OTP', style: constants.alternateIconTextStyle,),onPressed: (){
+                              style: ElevatedButton.styleFrom(),
+                              child: Text('Send OTP',),onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                             },
 
@@ -349,24 +267,21 @@ class _SignUpState extends State<SignUp> {
                                         return null;
                                       }
                                     },
-                                    style: GoogleFonts.nunito(
-                                        color: colors.primaryTextColor, fontSize: 17),
+                                    style: GoogleFonts.nunito(fontSize: 17),
 
                                     decoration: InputDecoration(
                                       label: Text('OTP',
                                           style: GoogleFonts.nunito(
-                                              color: colors.textBoxTextColor,
+                                              // color: colors.textBoxTextColor,
                                               fontSize: 17)),
                                       filled: true,
                                       hintText: 'Enter OTP',
-                                      hintStyle: GoogleFonts.poppins(
-                                          color:
-                                          colors.textBoxTextColor),
+                                      hintStyle: GoogleFonts.poppins(),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),
-                                      fillColor: colors.textBoxColor,
-                                      focusColor: colors.textBoxColor,
+                                      // fillColor: colors.textBoxColor,
+                                      // focusColor: colors.textBoxColor,
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.circular(5)),

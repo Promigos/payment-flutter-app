@@ -30,10 +30,8 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
         children:[
           Container(
-            color: colors.scaffoldColor,
           ),
           Scaffold(
-              backgroundColor: Colors.transparent,
               body: CustomSliverView(
                 columnList: [
                   Expanded(
@@ -58,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                                 Text(
                                   'Welcome',
                                   style: GoogleFonts.nunito(
-                                    color: colors.primaryTextColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 30,
                                   ),
@@ -69,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                                     child: Text(
                                       'Login to APP NAME',
                                       style: GoogleFonts.nunito(
-                                        color: colors.primaryTextColor,
                                         fontSize: 16,
                                       ),
                                     ))
@@ -81,8 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: constants.textFieldPadding,
                           child: TextFormField(
                               controller: _nameController,
-                              style: GoogleFonts.montserrat(
-                                  color: colors.primaryTextColor),
+                              style: GoogleFonts.montserrat(),
                               validator: (value) {
                                 if (value == "" || value == null) {
                                   return "Cannot be empty";
@@ -93,18 +88,15 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: InputDecoration(
                                 label: Text('Phone number or Email ID',
                                     style: GoogleFonts.nunito(
-                                        color: colors.textBoxTextColor,
                                         fontSize: 17)),
                                 filled: true,
                                 hintText: 'Enter your phone number or Email ID',
-                                hintStyle: GoogleFonts.poppins(
-                                    color:
-                                    colors.textBoxTextColor),
+                                hintStyle: GoogleFonts.poppins(),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
-                                fillColor: colors.textBoxColor,
-                                focusColor: colors.textBoxColor,
+                                // fillColor: colors.textBoxColor,
+                                // focusColor: colors.textBoxColor,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
@@ -114,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: constants.textFieldPadding,
                           child: TextFormField(
                               controller: _nameController,
-                              style: GoogleFonts.montserrat(
-                                  color: colors.primaryTextColor),
+                              style: GoogleFonts.montserrat(),
                               validator: (value) {
                                 if (value == "" || value == null) {
                                   return "Password cannot be empty";
@@ -126,17 +117,16 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: InputDecoration(
                                 label: Text('Password',
                                     style: GoogleFonts.nunito(
-                                        color: colors.textBoxTextColor,
+                                        // color: colors.textBoxTextColor,
                                         fontSize: 17)),
                                 filled: true,
                                 hintText: 'Enter Password',
-                                hintStyle: GoogleFonts.poppins(
-                                    color: colors.textBoxTextColor),
+                                hintStyle: GoogleFonts.poppins(),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
-                                fillColor: colors.textBoxColor,
-                                focusColor: colors.textBoxColor,
+                                // fillColor: colors.textBoxColor,
+                                // focusColor: colors.textBoxColor,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(5)),
@@ -147,8 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                           child: Align(
                             alignment: Alignment.topRight,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(primary: colors.alternateButtonColor),
-                              child: Text('LOG IN', style: constants.alternateIconTextStyle,),
+                              style: ElevatedButton.styleFrom(),
+                              child: Text('LOG IN',),
                               onPressed: (){
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const HomePage()));
                               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
@@ -129,7 +130,11 @@ class _HomePageState extends State<HomePage> {
                           HomeCard(
                               title: "Calculator",
                               icon: Icons.calculate_outlined,
-                              onClick: () {}),
+                              onClick: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const CalculatorList()));
+                              }),
                         ],
                       ),
                     ),

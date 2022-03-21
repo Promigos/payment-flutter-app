@@ -14,9 +14,9 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _phoneNumberController = TextEditingController();
-  final _emailIDController = TextEditingController();
+  // final _nameController = TextEditingController();
+  // final _phoneNumberController = TextEditingController();
+  // final _emailIDController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override

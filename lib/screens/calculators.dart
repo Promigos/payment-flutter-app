@@ -14,9 +14,9 @@ class _CalculatorListState extends State<CalculatorList> {
   @override
   Widget build(BuildContext context) {
     List allCalculators = [
-      ['EMI Calculator', const HomeLoanCalculator()],
-      ['Home Loan Calculator', const HomeLoanCalculator()],
-      ['Car Loan Calculator', const HomeLoanCalculator()],
+      ['Education Loan EMI Calculator', const HomeLoanCalculator()],
+      ['Home Loan EMI Calculator', const HomeLoanCalculator()],
+      ['Car Loan EMI Calculator', const HomeLoanCalculator()],
       ['Crypto Currency Converter', const HomeLoanCalculator()],
       ['Currency Converter', const HomeLoanCalculator()],
     ];

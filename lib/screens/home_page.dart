@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
+import 'package:payment_app/utils/colors.dart' as colors;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         width: double.maxFinite,
                         child: Card(
                           elevation: 10,
-                          color: Colors.blue,
+                          color: colors.cardColor,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text("₹ 1000000",
                                   style: TextStyle(
-                                      fontSize: 28, color: Colors.yellow.shade500, fontWeight: FontWeight.bold)),
+                                      fontSize: 28, color: colors.primaryTextColor, fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
@@ -98,7 +100,10 @@ class _HomePageState extends State<HomePage> {
                                       borderRadius: BorderRadius.circular(10.0),
                                       side: const BorderSide(
                                           color: Colors.blue)))),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const AddMoney()));
+                          }),
                     ),
                   ),
                 ],

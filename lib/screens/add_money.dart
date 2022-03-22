@@ -67,7 +67,9 @@ class _AddMoneyState extends State<AddMoney> {
                     height: 80.0,
                     width: 80.0,
                     child: FittedBox(
-                      child: FloatingActionButton(onPressed: (){}, child: Icon(Icons.arrow_back_rounded,color: Colors.white,),backgroundColor: color,),
+                      child: FloatingActionButton(onPressed: (){
+
+                      }, child: Icon(Icons.arrow_back_rounded,color: Colors.white,),backgroundColor: color,),
                     ),
                   ),
 

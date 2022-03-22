@@ -8,6 +8,17 @@ import 'package:payment_app/utils/url_launch.dart';
 class LoanCalculator extends StatefulWidget {
   String url;
   String LoanName;
+
+  late int minLoan;
+  late int maxLoan;
+  late double minRate;
+  late double maxRate;
+  late int minTenure;
+  late int maxTenure;
+
+  late int initLoan;
+  late double initRate;
+  late int initTenure;
   LoanCalculator({Key? key, required this.LoanName,required this.url}) : super(key: key);
 
   @override
@@ -28,6 +39,47 @@ class _LoanCalculatorState extends State<LoanCalculator> {
 
   @override
   void initState() {
+    if(widget.LoanName == 'Home'){
+      widget.minLoan = 100000;
+      widget.maxLoan = 10000000;
+      widget.initLoan = 1500000;
+
+      widget.minRate = 0.0;
+      widget.maxRate = 15.0;
+      widget.initRate = 7.0;
+
+      widget.minTenure = 1;
+      widget.maxTenure = 30;
+      widget.initTenure = 6;
+    }
+    else if(widget.LoanName == 'Car'){
+      //Change min, max and init values based on the type of loan
+      widget.minLoan = 100000;
+      widget.maxLoan = 10000000;
+      widget.initLoan = 1500000;
+
+      widget.minRate = 0.0;
+      widget.maxRate = 15.0;
+      widget.initRate = 7.0;
+
+      widget.minTenure = 1;
+      widget.maxTenure = 30;
+      widget.initTenure = 6;
+    }
+    else if(widget.LoanName == 'Education'){
+      //Change min, max and init values based on the type of loan
+      widget.minLoan = 100000;
+      widget.maxLoan = 10000000;
+      widget.initLoan = 1500000;
+
+      widget.minRate = 0.0;
+      widget.maxRate = 15.0;
+      widget.initRate = 7.0;
+
+      widget.minTenure = 1;
+      widget.maxTenure = 30;
+      widget.initTenure = 6;
+    }
 
     super.initState();
     rateController.addListener(_setStartValue);
@@ -35,18 +87,18 @@ class _LoanCalculatorState extends State<LoanCalculator> {
     tenureController.addListener(_setTenureValue);
 
     setState(() {
-      _rateValue = 7.0;
+      _rateValue = widget.initRate;
       rateController.text = _rateValue.toString();
-      _loanAmount = 1500000;
+      _loanAmount = widget.initLoan;
       loanController.text = _loanAmount.toString();
-      _tenureValue = 6;
+      _tenureValue = widget.initTenure;
       tenureController.text = _tenureValue.toString();
     });
   }
 
   _setLoanAmountValue() {
-    int minValue = 100000;
-    int maxValue = 10000000;
+    int minValue = widget.minLoan;
+    int maxValue = widget.maxLoan;
     if (int.parse(loanController.text) >= minValue &&
         int.parse(loanController.text) <= maxValue) {
       setState(() {
@@ -68,8 +120,8 @@ class _LoanCalculatorState extends State<LoanCalculator> {
   }
 
   _setTenureValue(){
-    int minValue = 1;
-    int maxValue = 30;
+    int minValue = widget.minTenure;
+    int maxValue = widget.maxTenure;
     if (int.parse(tenureController.text) >= minValue &&
         int.parse(tenureController.text) <= maxValue) {
       setState(() {
@@ -91,8 +143,8 @@ class _LoanCalculatorState extends State<LoanCalculator> {
   }
 
   _setStartValue() {
-    double minValue = 0.0;
-    double maxValue = 15.0;
+    double minValue = widget.minRate;
+    double maxValue = widget.maxRate;
     if (double.parse(rateController.text) >= minValue &&
         double.parse(rateController.text) <= maxValue) {
       setState(() {
@@ -252,7 +304,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                                   'Calculate',
                                 )),
                             ElevatedButton(
-                              child: Text(
+                              child: const Text(
                                 'Get Help',
                               ),
                               onPressed: () => setState(() {

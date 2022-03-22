@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/utils/colors.dart' as colors;
 
 class HomeCard extends StatelessWidget {
   const HomeCard({Key? key, required this.title, required this.icon, required this.onClick})
@@ -13,7 +14,8 @@ class HomeCard extends StatelessWidget {
       child: SizedBox(
         height: double.maxFinite,
         child: Card(
-          elevation: 10,
+          color: Color(0xff93A0D0),
+          elevation: 0,
           child: InkWell(
             child: Center(
               child: Column(
@@ -25,9 +27,11 @@ class HomeCard extends StatelessWidget {
                     size: 50,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(title, style: const TextStyle(
-                      fontSize: 18
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(title, style: TextStyle(
+                      fontSize: 22,
+                      color: colors.primaryTextColor,
+                      fontWeight: FontWeight.w600
                     ),),
                   )
                 ],

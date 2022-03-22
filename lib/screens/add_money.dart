@@ -17,6 +17,19 @@ class Alert extends StatelessWidget {
   }
 }
 
+Color chooseColor(amt,thresh){
+  Color color;
+  if (amt < thresh/2){
+    color = Colors.red;
+  }
+  else if(amt < thresh){
+    color = Colors.deepOrange;
+  }
+  else{
+    color = Colors.green;
+  }
+  return color;
+}
 class AddMoney extends StatefulWidget {
   const AddMoney({Key? key}) : super(key: key);
 
@@ -25,6 +38,16 @@ class AddMoney extends StatefulWidget {
 }
 
 class _AddMoneyState extends State<AddMoney> {
+  @override
+  Color ?color;
+  int amt =5000;
+  int thresh = 6000;
+  void initState() {
+    super.initState();
+    setState(() {
+      color = chooseColor(amt,thresh);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +67,7 @@ class _AddMoneyState extends State<AddMoney> {
                     height: 80.0,
                     width: 80.0,
                     child: FittedBox(
-                      child: FloatingActionButton(onPressed: (){}, child: Icon(Icons.arrow_back_rounded,color: Colors.white,),backgroundColor: Colors.green,),
+                      child: FloatingActionButton(onPressed: (){}, child: Icon(Icons.arrow_back_rounded,color: Colors.white,),backgroundColor: color,),
                     ),
                   ),
 
@@ -56,8 +79,8 @@ class _AddMoneyState extends State<AddMoney> {
                 lineWidth: 20.0,
                 percent: 0.6,
                 center: new Text("Rs 6000",
-                    style: TextStyle(fontSize: 40, color: Colors.green)),
-                progressColor: Colors.green,
+                    style: TextStyle(fontSize: 40, color: color)),
+                progressColor: color,
                 animation: true,
               ),
               SizedBox(height: 100),
@@ -79,7 +102,7 @@ class _AddMoneyState extends State<AddMoney> {
                           ),
                         ),
                         style: ButtonStyle(
-                            backgroundColor:MaterialStateProperty.all<Color>(Colors.green),
+                            backgroundColor:MaterialStateProperty.all<Color>(color!),
                           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)))
                         ),
                       )),

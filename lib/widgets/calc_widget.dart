@@ -28,7 +28,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
 
   @override
   void initState() {
-    
+
     super.initState();
     rateController.addListener(_setStartValue);
     loanController.addListener(_setLoanAmountValue);

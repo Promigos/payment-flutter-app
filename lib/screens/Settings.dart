@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
-int RecommendedWalletBalance = 1000;
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -11,23 +9,34 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  int RecommendedWalletBalance = 1000;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        
+      ),
       body: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.account_balance_wallet_rounded),
-            title: Text('Recommended Wallet Balance'),
-            trailing: TextFormField(
-              initialValue: RecommendedWalletBalance.toString(),
-              onChanged: (String s) {
-                setState(() {
-                  RecommendedWalletBalance = int.parse(s);
-                });
-              }
+      SizedBox(height: 50,),
 
-            ),
+      Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children:  [
+
+              Icon(Icons.account_balance_wallet_rounded, color: Colors.black,size:40),
+              Container(
+                width: 100,
+                child: TextFormField(
+                    initialValue: RecommendedWalletBalance.toString(),
+                    onChanged: (String s) {
+                      setState(() {
+                        RecommendedWalletBalance = int.parse(s);
+                      });
+                    }),
+              )
+
+            ],
           )
         ],
       ),

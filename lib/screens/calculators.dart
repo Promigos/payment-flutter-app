@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'car_loan_calculator.dart';
 import 'home_loan_calculator.dart';
-
+import 'education_loan_calculator.dart';
 class CalculatorList extends StatefulWidget {
   const CalculatorList({Key? key}) : super(key: key);
 
@@ -14,9 +14,9 @@ class _CalculatorListState extends State<CalculatorList> {
   @override
   Widget build(BuildContext context) {
     List allCalculators = [
-      ['Education Loan EMI Calculator', const HomeLoanCalculator()],
+      ['Education Loan EMI Calculator', const EducationLoanCalculator()],
       ['Home Loan EMI Calculator', const HomeLoanCalculator()],
-      ['Car Loan EMI Calculator', const HomeLoanCalculator()],
+      ['Car Loan EMI Calculator', const CarLoanCalculator()],
       ['Crypto Currency Converter', const HomeLoanCalculator()],
       ['Currency Converter', const HomeLoanCalculator()],
     ];

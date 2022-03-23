@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: darkTheme.DarkTheme,
+      theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
       home: const StartPage(),
     );

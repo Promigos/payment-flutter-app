@@ -25,9 +25,9 @@ class _StartPageState extends State<StartPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: Container(), flex: 8,),
-              Expanded(child: Text('Welcome to\nAPP NAME', style: GoogleFonts.nunito(fontSize: 35, fontWeight: FontWeight.bold,),),flex: 3,),
+              Expanded(child: Text('Welcome to\nWALLET UP', style: GoogleFonts.nunito(fontSize:35,fontWeight: FontWeight.bold,),),flex: 4,),
               SizedBox(height: 20,),
-              Expanded(child: Text('Add some catch phrase', style: TextStyle(),)),
+              Expanded(child: Text('Wallet anywhere anytime!', style: TextStyle(),)),
               Expanded(child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

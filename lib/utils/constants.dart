@@ -10,7 +10,6 @@ const String dateRegistered = "USER_REGISTER_DATE";
 const String emailIdKey = "USER_EMAIL";
 const String userIdKey = "USER_ID";
 const textFieldPadding =
-
 EdgeInsets.only(left: 20, right: 20, top: 4, bottom: 4);
 
 

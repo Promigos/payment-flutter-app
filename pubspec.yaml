@@ -41,6 +41,8 @@ dependencies:
   flutter_beautiful_popup: ^1.7.0
   url_launcher: ^6.0.20
   path_provider: ^2.0.0
+  contacts_service: ^0.6.3
+  easy_search: any
 
 dev_dependencies:
   flutter_test:

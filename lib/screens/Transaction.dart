@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-class AddMoneyForm extends StatefulWidget {
-  AddMoneyForm({Key? key}) : super(key: key);
+import 'package:contacts_service/contacts_service.dart';
+class Transaction extends StatefulWidget {
+  Transaction({Key? key}) : super(key: key);
   String acc='A';
   @override
-  _AddMoneyFormState createState() => _AddMoneyFormState();
+  _TransactionState createState() => _TransactionState();
 }
 //TODO Add server function to get available bank accounts
-class _AddMoneyFormState extends State<AddMoneyForm> {
+class _TransactionState extends State<Transaction> {
+  @override
+  void initState() async{
+    List<Contact> contacts = await ContactsService.getContacts();
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -27,6 +34,31 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                 child: Center(child: Text('Add Money',style: TextStyle(fontSize:32),)),
               ),
 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+
+                children: [
+                  Text('Person',style: TextStyle(fontSize: 20),),
+                  SizedBox(width:20),
+                  DropdownButton<String>(
+                    value:widget.acc,
+
+                    style: TextStyle(color: Colors.white),
+                    items: <String>['A', 'B', 'C', 'D'].map((String value) {
+
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (cur) {setState(() {
+                      print(widget.acc);
+                      widget.acc = cur!;
+                      print(widget.acc);
+                    });},
+                  )                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
 
@@ -56,25 +88,25 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
               // SizedBox(height:30),
               Row(mainAxisAlignment: MainAxisAlignment.center,
 
-              children: [
-                      Text('Amount',style: TextStyle(fontSize: 20),),
-                SizedBox(width:20),
-                Container(
-                    height: 50,
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: 1000.toString(),
-                      onChanged: (s){
-                        setState(() {
-                          amt = int.parse(s);
-                        });
+                children: [
+                  Text('Amount',style: TextStyle(fontSize: 20),),
+                  SizedBox(width:20),
+                  Container(
+                      height: 50,
+                      width: 50,
+                      child: TextFormField(
+                        initialValue: 1000.toString(),
+                        onChanged: (s){
+                          setState(() {
+                            amt = int.parse(s);
+                          });
 
-                      },
-                    )
-                )
+                        },
+                      )
+                  )
 
-              ],
-                ),
+                ],
+              ),
               // SizedBox(height:30),
               Center(
                 child: SizedBox(
@@ -82,7 +114,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                     height: 60,
                     child: TextButton(
                       onPressed: () {
-                        //TODO Perform Addition in server
+
                         print('Added');
                         Navigator.pop(context);
                       },

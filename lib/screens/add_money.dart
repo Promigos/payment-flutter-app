@@ -94,7 +94,7 @@ class _AddMoneyState extends State<AddMoney> {
                       height: 60,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoneyForm()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AddMoneyForm()));
                           },
 
                         child: Center(

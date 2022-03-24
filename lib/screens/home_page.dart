@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
+import 'package:payment_app/screens/profile_page.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
@@ -156,7 +157,11 @@ class _HomePageState extends State<HomePage> {
                           HomeCard(
                               title: "Profile",
                               icon: Icons.person,
-                              onClick: () {}),
+                              onClick: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => profpage()));
+                              }),
                         ],
                       ),
                     )

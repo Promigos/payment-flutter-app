@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:payment_app/screens/profile_page.dart';
 
-void main() => runApp(const MaterialApp(
-      home: updatecred(),
-    ));
-
-class updatecred extends StatefulWidget {
-  const updatecred({Key? key}) : super(key: key);
+class UpdateCredentials extends StatefulWidget {
+  const UpdateCredentials({Key? key}) : super(key: key);
 
   @override
-  _updatecredState createState() => _updatecredState();
+  _UpdateCredentialsState createState() => _UpdateCredentialsState();
 }
 
-class _updatecredState extends State<updatecred> {
+class _UpdateCredentialsState extends State<UpdateCredentials> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

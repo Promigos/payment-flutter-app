@@ -29,6 +29,8 @@ environment:
 dependencies:
   qr_code_scanner: ^0.7.0
   auto_size_text:
+  oktoast: ^3.1.5
+  flutter_secure_storage: ^5.0.2
   flutter:
     sdk: flutter
 

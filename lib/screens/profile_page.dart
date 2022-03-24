@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:payment_app/screens/update_cred.dart';
+import 'package:payment_app/screens/home_page.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -102,7 +103,9 @@ class _profpage extends State<ProfilePage> {
               children: [
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UpdateCredentials()));},
                     child: const Text("ADD ACCOUNT / CHANGE DEFAULT ACCOUNT",
                         style: TextStyle(fontSize: 15)),
                   ),
@@ -116,7 +119,9 @@ class _profpage extends State<ProfilePage> {
                       Expanded(
                         flex: 5,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => UpdateCredentials()));},
                           child: const Center(
                               child: Text(
                             "CHANGE PASSWORD",
@@ -129,7 +134,9 @@ class _profpage extends State<ProfilePage> {
                       Expanded(
                         flex: 5,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => UpdateCredentials()));},
                           child: const Text(
                             "CHANGE PHONE NO.",
                           ),

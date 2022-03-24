@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                               onClick: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => profpage()));
+                                    MaterialPageRoute(builder: (context) => ProfilePage()));
                               }),
                         ],
                       ),

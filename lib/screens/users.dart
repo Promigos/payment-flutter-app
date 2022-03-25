@@ -34,13 +34,17 @@ class _UsersState extends State<Users> {
           builder: (context, AsyncSnapshot<http.Response> snapshot) {
             List<UserModel> list = [];
             if (snapshot.hasData) {
-              var jsonData = json.decode(snapshot.data!.body);
-              for (var i in jsonData) {
-                list.add(UserModel(
-                    userID: i['userID'],
-                    name: i['name'],
-                    phoneNumber: i['phone'],
-                    email: i['email']));
+              try {
+                var jsonData = json.decode(snapshot.data!.body);
+                for (var i in jsonData) {
+                  list.add(UserModel(
+                      userID: i['userID'],
+                      name: i['name'],
+                      phoneNumber: i['phone'],
+                      email: i['email']));
+                }
+              } catch (e) {
+                return const Center(child: CircularProgressIndicator());
               }
             }
             return snapshot.hasData

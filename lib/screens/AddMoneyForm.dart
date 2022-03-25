@@ -1,108 +1,157 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:oktoast/oktoast.dart';
+
+import '../utils/http_modules.dart';
+import '../widgets/alert_dialog.dart';
 
 class AddMoneyForm extends StatefulWidget {
-  AddMoneyForm({Key? key}) : super(key: key);
-  String acc='A';
+  const AddMoneyForm({Key? key}) : super(key: key);
+
   @override
   _AddMoneyFormState createState() => _AddMoneyFormState();
 }
+
 //TODO Add server function to get available bank accounts
 class _AddMoneyFormState extends State<AddMoneyForm> {
+  int amt = 1000;
+  String acc = '';
+  bool showProgress = false;
+
   @override
   Widget build(BuildContext context) {
-
-    var amt;
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 500,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Center(child: Text('Add Money',style: TextStyle(fontSize:32),)),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-
-
-                children: [
-                  const Text('Bank Account',style: const TextStyle(fontSize: 20),),
-                  const SizedBox(width:20),
-                  DropdownButton<String>(
-                    value:widget.acc,
-
-                    style: const TextStyle(color: Colors.white),
-                    items: <String>['A', 'B', 'C', 'D'].map((String value) {
-
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (cur) {setState(() {
-                      print(widget.acc);
-                      widget.acc = cur!;
-                      print(widget.acc);
-                    });},
-                  )
-                ],
-              ),
-              // SizedBox(height:30),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                      const Text('Amount',style: const TextStyle(fontSize: 20),),
-                const SizedBox(width:20),
-                Container(
-                    height: 50,
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: 1000.toString(),
-                      onChanged: (s){
-                        setState(() {
-                          amt = int.parse(s);
-                        });
-
-                      },
+        child: FutureBuilder(
+            future: makePostRequest(null, "/accounts", null, true,
+                context: context),
+            builder: (context, AsyncSnapshot<http.Response> snapshot) {
+              print(snapshot.data!.body);
+              List<DropdownMenuItem<String>> accountsWidget = [];
+              print(json.decode(snapshot.data!.body));
+              if (snapshot.hasData) {
+                try {
+                  acc = json.decode(snapshot.data!.body)['data'][0].toString();
+                  print(json.decode(snapshot.data!.body)['data'][0].toString());
+                  for (var i in json.decode(snapshot.data!.body)['data']) {
+                    accountsWidget.add(DropdownMenuItem(
+                      value: i.toString(),
+                      child: Text(i.toString()),
+                    ));
+                  }
+                } catch (e) {
+                  return CircularProgressIndicator();
+                }
+              }
+              return snapshot.hasData
+                  ? SizedBox(
+                      height: 500,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Center(
+                                child: Text(
+                              'Add Credits',
+                              style: TextStyle(fontSize: 32),
+                            )),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Bank Account',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(width: 20),
+                              DropdownButton<String>(
+                                value: acc,
+                                style: const TextStyle(color: Colors.white),
+                                items: accountsWidget,
+                                onChanged: (cur) {
+                                  print(cur);
+                                  setState(() {
+                                    print(acc);
+                                    acc = cur!;
+                                    print(acc);
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                          // SizedBox(height:30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Amount',
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(width: 20),
+                              Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: TextFormField(
+                                    initialValue: amt.toString(),
+                                    onChanged: (s) {
+                                      setState(() {
+                                        amt = int.parse(s);
+                                        print(s);
+                                        print("AMT");
+                                      });
+                                    },
+                                  ))
+                            ],
+                          ),
+                          // SizedBox(height:30),
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 40, right: 40),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  displayDialog(context, "Yes", "No", () async {
+                                    setState(() {
+                                      showProgress = true;
+                                    });
+                                    print(amt);
+                                    var res = await makePostRequest(
+                                        json.encode({
+                                          "account": int.parse(acc),
+                                          "amount": amt
+                                        }),
+                                        "/funds/addFunds",
+                                        null,
+                                        true);
+                                    setState(() {
+                                      showProgress = false;
+                                    });
+                                    if (res.statusCode == 200) {
+                                      showToast("Funds successfully added!");
+                                      Navigator.pop(context);
+                                    } else {
+                                      showToast(res.body);
+                                    }
+                                    Navigator.pop(context);
+                                  }, "Add credits?",
+                                      "Are you sure you want to add credits to your wallet?");
+                                },
+                                child: const Center(
+                                  child: Text(
+                                    "Add to Wallet",
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     )
-                )
-
-              ],
-                ),
-              // SizedBox(height:30),
-              Center(
-                child: SizedBox(
-                    width: 250,
-                    height: 60,
-                    child: TextButton(
-                      onPressed: () {
-                        //TODO Perform Addition in server
-                        print('Added');
-                        Navigator.pop(context);
-                      },
-
-                      child: const Center(
-                        child: Text(
-                          "Add to Wallet",
-                          style: TextStyle(fontSize: 23, color: Colors.white),
-                        ),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:MaterialStateProperty.all<Color>(Colors.green  ),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)))
-                      ),
-                    )),
-              ),
-            ],
-          ),
-        ),
+                  : const CircularProgressIndicator();
+            }),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -26,26 +27,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    // super.initState();
-    // messages.add(
-    //
-    //     //TODO: Remove test data after implementing backend logic
-    //     ChatModel(message: "HEY", date: "", sender: "MY_ID", receiver: ""));
-    // messages.add(
-    //     ChatModel(message: "Hello", date: "", sender: "", receiver: "MY_ID"));
-    // messages.add(ChatModel(
-    //     message:
-    //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    //     date: "",
-    //     sender: "MY_ID",
-    //     receiver: ""));
-    //
-    // messages.add(ChatModel(
-    //     message:
-    //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    //     date: "",
-    //     sender: "",
-    //     receiver: "MY_ID"));
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {});
+    });
   }
 
   _scrollToBottom() {

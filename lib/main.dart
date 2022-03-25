@@ -4,6 +4,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/AddMoneyForm.dart';
 import 'package:payment_app/screens/home_page.dart';
 import 'package:payment_app/screens/start_page.dart';
+import 'package:payment_app/screens/unlock_page.dart';
 import 'package:payment_app/utils/theme.dart';
 import 'package:payment_app/widgets/load_valid_page_widget.dart';
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
-      home: const LoadValidPageWidget(StartPage(), HomePage()),
+      home:  LoadValidPageWidget(const StartPage(), UnlockPage()),
     );
+
   }
 }

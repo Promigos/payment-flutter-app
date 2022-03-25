@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/utils/utils.dart';
 
 class ChatModel {
   String message;
@@ -6,8 +7,11 @@ class ChatModel {
   String sender;
   String receiver;
 
-  get messageWidget {
-    if (sender == "MY_ID") {
+  messageWidget(id) {
+    print(id);
+    print(sender);
+    print(receiver);
+    if (sender == id) {
       return Container(
         padding:
             const EdgeInsets.only(left: 50, right: 14, top: 10, bottom: 10),

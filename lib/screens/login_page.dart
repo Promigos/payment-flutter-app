@@ -166,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                                   jwtTokenSet = json.decode(res.body)['token'];
                                   setName = json.decode(res.body)['name'];
                                   setEmailID = json.decode(res.body)['email'];
+                                  setUserId = json.decode(res.body)['id'];
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                           builder: (context) =>

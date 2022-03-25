@@ -7,6 +7,7 @@ import 'package:payment_app/widgets/load_valid_page_widget.dart';
 
 //TODO: Check for status codes everywhere and validate data
 //TODO: Timer to reload Post Requests
+//TODO: Complete block page, change password, edit data and stuff
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

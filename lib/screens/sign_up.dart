@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:payment_app/utils/colors.dart' as colors;
+import 'package:payment_app/screens/login_page.dart';
 import 'package:payment_app/utils/constants.dart' as constants;
+import '../utils/http_modules.dart';
+import '../widgets/alert_dialog.dart';
 import '../widgets/custom_sliver.dart';
+import '../widgets/error_box.dart';
 import 'home_page.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -14,19 +20,16 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  // final _nameController = TextEditingController();
-  // final _phoneNumberController = TextEditingController();
-  // final _emailIDController = TextEditingController();
-  final _passwordController = TextEditingController();
+
+  String? name, email, phoneNumber, password, passwordRepeat;
+  String error = "";
+  bool otpButtonDisabled = true;
+  bool showProgress = false;
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Container(
-          // color: colors.scaffoldColor,
-          ),
       Scaffold(
-          // backgroundColor: Colors.transparent,
           body: CustomSliverView(
         columnList: [
           Expanded(
@@ -51,7 +54,6 @@ class _SignUpState extends State<SignUp> {
                         Text(
                           'Welcome',
                           style: GoogleFonts.nunito(
-                            // color: colors.primaryTextColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
@@ -61,7 +63,6 @@ class _SignUpState extends State<SignUp> {
                             child: Text(
                               'Register with APP NAME',
                               style: GoogleFonts.nunito(
-                                // color: colors.primaryTextColor,
                                 fontSize: 16,
                               ),
                             ))
@@ -72,7 +73,9 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: constants.textFieldPadding,
                   child: TextFormField(
-                      // controller: _nameController,
+                      onSaved: (value) {
+                        name = value;
+                      },
                       style: GoogleFonts.montserrat(),
                       validator: (value) {
                         if (value == "" || value == null) {
@@ -83,17 +86,13 @@ class _SignUpState extends State<SignUp> {
                       },
                       decoration: InputDecoration(
                         label: Text('Name',
-                            style: GoogleFonts.nunito(
-                                // color: colors.textBoxTextColor,
-                                fontSize: 17)),
+                            style: GoogleFonts.nunito(fontSize: 17)),
                         filled: true,
                         hintText: 'Enter your name',
                         hintStyle: GoogleFonts.poppins(),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxColor,
-                        // focusColor: colors.textBoxColor,
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
@@ -102,7 +101,9 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: constants.textFieldPadding,
                   child: TextFormField(
-                      // controller: _nameController,
+                      onSaved: (value) {
+                        phoneNumber = value;
+                      },
                       style: GoogleFonts.montserrat(),
                       validator: (value) {
                         if (value == "" || value == null) {
@@ -120,8 +121,6 @@ class _SignUpState extends State<SignUp> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxColor,
-                        // focusColor: colors.textBoxColor,
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
@@ -130,11 +129,15 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: constants.textFieldPadding,
                   child: TextFormField(
-                      // controller: _nameController,
+                      onSaved: (value) {
+                        email = value;
+                      },
                       style: GoogleFonts.montserrat(),
                       validator: (value) {
                         if (value == "" || value == null) {
-                          return "Please enter a valid email id";
+                          return "Please enter E-Mail";
+                        } else if (!EmailValidator.validate(value)) {
+                          return "Invalid Email";
                         } else {
                           return null;
                         }
@@ -148,8 +151,6 @@ class _SignUpState extends State<SignUp> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxColor,
-                        // focusColor: colors.textBoxColor,
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(5)),
@@ -164,10 +165,13 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: 170,
                         child: TextFormField(
+                            onSaved: (value) {
+                              password = value;
+                              print(password);
+                            },
                             maxLength: 6,
                             keyboardType:
                                 const TextInputType.numberWithOptions(),
-                            controller: _passwordController,
                             validator: (value) {
                               if (value == "" || value == null) {
                                 return "Enter Password";
@@ -178,17 +182,13 @@ class _SignUpState extends State<SignUp> {
                             style: GoogleFonts.nunito(fontSize: 17),
                             decoration: InputDecoration(
                               label: Text('Password',
-                                  style: GoogleFonts.nunito(
-                                      // color: colors.textBoxTextColor,
-                                      fontSize: 17)),
+                                  style: GoogleFonts.nunito(fontSize: 17)),
                               filled: true,
                               hintText: 'Enter password',
                               hintStyle: GoogleFonts.poppins(),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(5)),
-                              // fillColor: colors.textBoxColor,
-                              // focusColor: colors.textBoxColor,
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(5)),
@@ -197,10 +197,12 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: 170,
                         child: TextFormField(
+                            onSaved: (value) {
+                              passwordRepeat = value;
+                            },
                             maxLength: 6,
                             keyboardType:
                                 const TextInputType.numberWithOptions(),
-                            controller: _passwordController,
                             validator: (value) {
                               if (value == "" || value == null) {
                                 return "Enter password";
@@ -211,17 +213,13 @@ class _SignUpState extends State<SignUp> {
                             style: GoogleFonts.nunito(fontSize: 17),
                             decoration: InputDecoration(
                               label: Text('Re-enter Password',
-                                  style: GoogleFonts.nunito(
-                                      // color: colors.textBoxTextColor,
-                                      fontSize: 17)),
+                                  style: GoogleFonts.nunito(fontSize: 17)),
                               filled: true,
                               hintText: 'Re-enter Password',
                               hintStyle: GoogleFonts.poppins(),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(5)),
-                              // fillColor: colors.textBoxColor,
-                              // focusColor: colors.textBoxColor,
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(5)),
@@ -240,63 +238,130 @@ class _SignUpState extends State<SignUp> {
                         'Send OTP',
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          //TODO: Generate OTP here
+                          setState(() {
+                            otpButtonDisabled = false;
+                          });
+                        } else {
+                          setState(() {
+                            otpButtonDisabled = true;
+                          });
+                        }
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const HomePage()));
                       },
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 30.0, bottom: 20, left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: TextFormField(
-                            maxLength: 6,
-                            keyboardType:
-                                const TextInputType.numberWithOptions(),
-                            // controller: _passwordController,
-                            validator: (value) {
-                              if (value == "" || value == null) {
-                                return "Enter OTP";
-                              } else {
-                                return null;
-                              }
-                            },
-                            style: GoogleFonts.nunito(fontSize: 17),
-                            decoration: InputDecoration(
-                              label: Text('OTP',
-                                  style: GoogleFonts.nunito(
-                                      // color: colors.textBoxTextColor,
-                                      fontSize: 17)),
-                              filled: true,
-                              hintText: 'Enter OTP',
-                              hintStyle: GoogleFonts.poppins(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(5)),
-                              // fillColor: colors.textBoxColor,
-                              // focusColor: colors.textBoxColor,
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(5)),
-                            )),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: const SizedBox(
-                              height: 40,
-                              child: Center(child: Text('Verify OTP'))))
-                    ],
-                  ),
-                )
               ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 30.0, bottom: 20, left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 200,
+                  child: TextFormField(
+                      maxLength: 6,
+                      keyboardType: const TextInputType.numberWithOptions(),
+                      validator: (value) {
+                        if (value == "" || value == null) {
+                          return "Enter OTP";
+                        } else {
+                          return null;
+                        }
+                      },
+                      style: GoogleFonts.nunito(fontSize: 17),
+                      decoration: InputDecoration(
+                        label: Text('OTP',
+                            style: GoogleFonts.nunito(fontSize: 17)),
+                        filled: true,
+                        hintText: 'Enter OTP',
+                        hintStyle: GoogleFonts.poppins(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(5)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(5)),
+                      )),
+                ),
+                showProgress
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      )
+                    : ElevatedButton(
+                        onPressed: otpButtonDisabled
+                            ? null
+                            : () async {
+                                //TODO: Verify OTP and get firebase jwt
+
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+
+                                  if (password != passwordRepeat) {
+                                    setState(() {
+                                      error = "Passwords don't match";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      error = "";
+                                      showProgress = true;
+                                    });
+                                    var res = await makePostRequest(
+                                        json.encode({
+                                          "password": password,
+                                          "email": email,
+                                          "phoneNumber": phoneNumber,
+                                          "countryCode": 91,
+                                          "userLocation": [],
+                                          "name": name
+                                        }),
+                                        "/register",
+                                        null,
+                                        false);
+                                    setState(() {
+                                      showProgress = false;
+                                    });
+                                    if (res.statusCode == 200) {
+                                      error = '';
+                                      displayDialog(context, "Continue", null,
+                                          () {
+                                        Navigator.of(context).pop();
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginPage()));
+                                      }, "Account has been registered",
+                                          "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
+                                    } else {
+                                      setState(() {
+                                        error =
+                                            json.decode(res.body)['message'];
+                                      });
+                                    }
+                                  }
+                                }
+                              },
+                        child: const SizedBox(
+                            height: 40,
+                            child: Center(child: Text('Verify OTP'))))
+              ],
+            ),
+          ),
+          Padding(
+            padding: constants.textFieldPadding,
+            child: error == "" ? Container() : errorBox(error),
           ),
           Expanded(flex: 1, child: Container())
         ],

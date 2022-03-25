@@ -19,18 +19,18 @@ class UnlockPage extends StatefulWidget {
 class _UnlockPageState extends State<UnlockPage> {
   final _formKey = GlobalKey<FormState>();
   static final _auth = LocalAuthentication();
+
   hasBiometrics() async {
     bool canCheckBiometrics = await _auth.canCheckBiometrics;
     print(canCheckBiometrics);
     return canCheckBiometrics;
-
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: hasBiometrics(),
-        builder: (BuildContext context,  AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           return snapshot.hasData
               ? Stack(children: [
                   Container(),
@@ -91,7 +91,7 @@ class _UnlockPageState extends State<UnlockPage> {
                               children: [
                                 if (snapshot.data == true)
                                   Padding(
-                                    padding: constants.textFieldPadding,
+                                    padding: const EdgeInsets.only(left: 20, right: 10),
                                     child: Align(
                                       alignment: Alignment.topRight,
                                       child: ElevatedButton(
@@ -100,35 +100,36 @@ class _UnlockPageState extends State<UnlockPage> {
                                           'Finger Print',
                                         ),
                                         onPressed: () async {
-                                          final isAuthenticated = await LocaLAuthApi.authenticate();
-                                          if(isAuthenticated){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-                                          }
-                                          else{
+                                          final isAuthenticated =
+                                              await LocaLAuthApi.authenticate();
+                                          if (isAuthenticated) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomePage()));
+                                          } else {
                                             print("Authenticate failed!");
                                           }
                                         },
                                       ),
                                     ),
                                   ),
-                                Padding(
-                                  padding: constants.textFieldPadding,
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(),
-                                      child: const Text(
-                                        'UNLOCK',
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomePage()));
-                                      },
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(),
+                                    child: const Text(
+                                      'Unlock',
                                     ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const HomePage()));
+                                    },
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ],

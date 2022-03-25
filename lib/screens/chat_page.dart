@@ -1,9 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:payment_app/models/chat_model.dart';
+import 'package:payment_app/models/user_model.dart';
+import 'package:payment_app/screens/Transaction.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({Key? key, required this.userData}) : super(key: key);
+
+  final UserModel userData;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -57,15 +61,15 @@ class _ChatPageState extends State<ChatPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                CircleAvatar(
+              children: [
+                const CircleAvatar(
                   child: Text(
                     "S",
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: AutoSizeText('Soorya'),
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: AutoSizeText(widget.userData.name),
                 ),
               ],
             ),
@@ -121,7 +125,12 @@ class _ChatPageState extends State<ChatPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FloatingActionButton.extended(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Transaction(userData: widget.userData,)),
+                    );
+                  },
                   label: const Text("Pay"),
                   icon: const Icon(Icons.payment),
                 ),

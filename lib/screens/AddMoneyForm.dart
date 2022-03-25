@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+
 class AddMoneyForm extends StatefulWidget {
   AddMoneyForm({Key? key}) : super(key: key);
   String acc='A';
@@ -22,8 +23,8 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
+              const Padding(
+                padding: EdgeInsets.all(20.0),
                 child: Center(child: Text('Add Money',style: TextStyle(fontSize:32),)),
               ),
 
@@ -32,12 +33,12 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
 
 
                 children: [
-                  Text('Bank Account',style: TextStyle(fontSize: 20),),
-                  SizedBox(width:20),
+                  const Text('Bank Account',style: const TextStyle(fontSize: 20),),
+                  const SizedBox(width:20),
                   DropdownButton<String>(
                     value:widget.acc,
 
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     items: <String>['A', 'B', 'C', 'D'].map((String value) {
 
                       return DropdownMenuItem<String>(
@@ -57,8 +58,8 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
               Row(mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                      Text('Amount',style: TextStyle(fontSize: 20),),
-                SizedBox(width:20),
+                      const Text('Amount',style: const TextStyle(fontSize: 20),),
+                const SizedBox(width:20),
                 Container(
                     height: 50,
                     width: 50,
@@ -87,7 +88,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                         Navigator.pop(context);
                       },
 
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Add to Wallet",
                           style: TextStyle(fontSize: 23, color: Colors.white),

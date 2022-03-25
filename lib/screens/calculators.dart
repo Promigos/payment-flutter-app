@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'car_loan_calculator.dart';
 import 'home_loan_calculator.dart';
 import 'education_loan_calculator.dart';
+
 class CalculatorList extends StatefulWidget {
   const CalculatorList({Key? key}) : super(key: key);
 
@@ -20,30 +21,38 @@ class _CalculatorListState extends State<CalculatorList> {
       ['Crypto Currency Converter', const HomeLoanCalculator()],
       ['Currency Converter', const HomeLoanCalculator()],
     ];
+
+    List<Widget> widgetList = [];
+
+    for (var i in allCalculators) {
+      widgetList.add(Expanded(
+        child: Card(
+          elevation: 10,
+          child: ListTile(
+            title: Center(
+              child: Text(i[0].toString(),
+                  style: GoogleFonts.nunito(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => i[1]));
+            },
+          ),
+        ),
+      ));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calculators'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: allCalculators.length,
-              itemBuilder: (_, i) {
-                return ListTile(
-                    title: Text(
-                        allCalculators[i][0].toString(),
-                        style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold,)
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => allCalculators[i][1]));
-                    },
-                  );
-              }),
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: widgetList,
         ),
       ),
     );

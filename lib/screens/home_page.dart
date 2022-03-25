@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/profile_page.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
+import 'package:payment_app/screens/start_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
 import 'package:payment_app/utils/colors.dart' as colors;
+
+import '../utils/utils.dart';
+import '../widgets/alert_dialog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,7 +45,18 @@ class _HomePageState extends State<HomePage> {
                   Icons.settings,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  displayDialog(context, "Yes", "No", () {
+                    clearAllData();
+                    showToast("Signed out successfully!");
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            const StartPage()),
+                            (Route<dynamic> route) => false);
+                  }, "Are you sure you want to sign out?",
+                      "You will be signed out and all data will be lost");
+                },
                 splashRadius: 20,
                 icon: const Icon(
                   Icons.logout,

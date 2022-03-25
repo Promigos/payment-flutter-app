@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:oktoast/oktoast.dart';
-import 'package:payment_app/screens/profile_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/qr_result_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRScannerView extends StatefulWidget {
@@ -90,8 +89,14 @@ class _QRScannerViewState extends State<QRScannerView> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        showToast(result.toString());
-        print(result?.code);
+        controller.stopCamera();
+        showToast("QR code scanned!");
+        if (result != null) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QRCodeResult(token: scanData.code)));
+        }
       });
     });
   }

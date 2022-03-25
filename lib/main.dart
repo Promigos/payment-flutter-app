@@ -8,6 +8,8 @@ import 'package:payment_app/screens/unlock_page.dart';
 import 'package:payment_app/utils/theme.dart';
 import 'package:payment_app/widgets/load_valid_page_widget.dart';
 
+//TODO: Check for status codes everywhere and validate data
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(

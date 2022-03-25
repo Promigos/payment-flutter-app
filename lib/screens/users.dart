@@ -44,6 +44,7 @@ class _UsersState extends State<Users> {
                       phoneNumber: i['phone'],
                       email: i['email']));
                 }
+                if(list.isEmpty) return const Center(child: Text("No users found"));
               } catch (e) {
                 return const Center(child: CircularProgressIndicator());
               }

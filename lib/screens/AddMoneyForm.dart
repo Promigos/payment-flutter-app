@@ -22,16 +22,30 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Users'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            splashRadius: 20,
+            icon: const Icon(
+              Icons.arrow_back_ios_outlined,
+            )),
+      ),
       body: Center(
         child: FutureBuilder(
             future: makePostRequest(null, "/accounts", null, true,
                 context: context),
             builder: (context, AsyncSnapshot<http.Response> snapshot) {
-              print(snapshot.data!.body);
               List<DropdownMenuItem<String>> accountsWidget = [];
-              print(json.decode(snapshot.data!.body));
               if (snapshot.hasData) {
                 try {
+                  List data = json.decode(snapshot.data!.body)['data'];
+                  print(data.isEmpty);
+                  if (data.isEmpty) {
+                    return const Text("Please add a bank account");
+                  }
                   acc = json.decode(snapshot.data!.body)['data'][0].toString();
                   print(json.decode(snapshot.data!.body)['data'][0].toString());
                   for (var i in json.decode(snapshot.data!.body)['data']) {

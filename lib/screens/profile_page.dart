@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:payment_app/screens/accdetails_page.dart';
+import 'package:payment_app/screens/addaccounts_page.dart';
 import 'package:payment_app/screens/update_cred.dart';
-import 'package:payment_app/screens/home_page.dart';
+import 'package:payment_app/screens/addphno_page.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -100,16 +103,37 @@ class _profpage extends State<ProfilePage> {
             const SizedBox(height: 30.0),
             Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Center(
-                  child: ElevatedButton(
-                    onPressed: () {Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => UpdateCredentials()));},
-                    child: const Text("ADD ACCOUNT / CHANGE DEFAULT ACCOUNT",
-                        style: TextStyle(fontSize: 15)),
+                  child:Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(onPressed: (){Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AddAccounts()));},
+                          child: Wrap(
+                            children: <Widget>[
+                              Icon(
+                                Icons.add_box,
+                                color: Colors.white,
+                                size: 24.0,
+                              ),
+                              SizedBox(
+                                width:10,
+                              ),
+                              Text("MANAGE ACCOUNTS", style:TextStyle(fontSize:18)),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                    ],
                   ),
                 ),
+
                 const SizedBox(
                   height: 5,
                 ),
@@ -136,7 +160,7 @@ class _profpage extends State<ProfilePage> {
                         child: ElevatedButton(
                           onPressed: () {Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => UpdateCredentials()));},
+                              MaterialPageRoute(builder: (context) => ChangePhNo()));},
                           child: const Text(
                             "CHANGE PHONE NO.",
                           ),

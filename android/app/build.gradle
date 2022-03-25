@@ -46,7 +46,7 @@ android {
         applicationId "com.example.payment_app"
         minSdkVersion 20
         multiDexEnabled = true
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

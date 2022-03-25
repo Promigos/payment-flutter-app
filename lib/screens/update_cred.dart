@@ -8,47 +8,32 @@ class UpdateCredentials extends StatefulWidget {
 }
 
 class _UpdateCredentialsState extends State<UpdateCredentials> {
+  bool _isObscure = true;
+  bool _isObscure1=true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
+        body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(
+                height: 30,
+              ),
+
               const SizedBox(
                 height: 30,
               ),
               const Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Text('PHONE NUMBER',
-                    style: TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold)),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter new phone number',
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text('PASSWORD',
+                child: Text('CHANGE PASSWORD',
                     style: TextStyle(
                         fontSize: 20,
                         letterSpacing: 1.5,
                         fontWeight: FontWeight.bold)),
               ),
               const SizedBox(
-                height: 5,
+                height: 25,
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -63,12 +48,23 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: TextFormField(
-                  decoration: const InputDecoration(
+                  obscureText: _isObscure,
+
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Enter your old password',
-                  ),
+                    labelText: 'Enter your current password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
                 ),
-              ),
+              ),),
               const SizedBox(
                 height: 5,
               ),
@@ -85,17 +81,32 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: TextFormField(
-                  decoration: const InputDecoration(
+                  obscureText: _isObscure1,
+
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Enter your new password',
+                    labelText: 'Enter your current password',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscure1 ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure1 = !_isObscure1;
+                        });
+                      },
+                    ),
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 40,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(18),
                     child: ElevatedButton(
                       onPressed: () {},
                       child: const Text(
@@ -110,8 +121,6 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
               ),
             ],
           ),
-        ),
-      ),
     );
   }
 }

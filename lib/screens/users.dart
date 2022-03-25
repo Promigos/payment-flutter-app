@@ -6,6 +6,7 @@ import 'package:payment_app/screens/chat_page.dart';
 import 'package:http/http.dart' as http;
 import '../models/user_model.dart';
 import '../utils/http_modules.dart';
+import 'Transaction.dart';
 
 class Users extends StatefulWidget {
   const Users({Key? key}) : super(key: key);
@@ -74,7 +75,12 @@ class _UsersState extends State<Users> {
                               maxLines: 1,
                             ),
                             trailing: ElevatedButton(
-                                onPressed: () {}, child: const Text("PAY")),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Transaction(userData: list[index],)),
+                                  );
+                                }, child: const Text("PAY")),
                           ),
                           elevation: 5,
                         ),

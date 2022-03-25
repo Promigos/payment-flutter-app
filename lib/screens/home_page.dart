@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
+import 'package:payment_app/screens/display_qr_page.dart';
 import 'package:payment_app/screens/profile_page.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
 import 'package:payment_app/screens/start_page.dart';
@@ -120,6 +121,27 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             Navigator.push(
                                 context, MaterialPageRoute(builder: (context) => const AddMoney()));
+                          }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: ElevatedButton(
+                          child: const Text("Get QR Code"),
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(15)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                          color: Colors.blue)))),
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => const DisplayUserQR()));
                           }),
                     ),
                   ),

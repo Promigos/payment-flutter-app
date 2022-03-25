@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/profile_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,8 @@ class _QRScannerViewState extends State<QRScannerView> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        showToast(result.toString());
+        print(result?.code);
       });
     });
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:payment_app/screens/accdetails_page.dart';
-import 'package:payment_app/screens/addaccounts_page.dart';
+import 'package:payment_app/screens/add_accounts_page.dart';
 import 'package:payment_app/screens/update_cred.dart';
 import 'package:payment_app/screens/addphno_page.dart';
 class ProfilePage extends StatefulWidget {

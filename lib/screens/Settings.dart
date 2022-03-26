@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -19,45 +20,48 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:  AppBar(
-          title: const Text("Settings"),
-
-        ),
+      appBar: AppBar(
+        title: const Text("Settings"),
+      ),
       body: SettingsList(
         sections: [
           SettingsSection(
             title: Text('Common'),
             tiles: <SettingsTile>[
-
-              SettingsTile(title:Text('Recommended Wallet Balance'),
-                leading: Icon(Icons.account_balance_wallet,color: Colors.white,),
+              SettingsTile(
+                title: Text('Recommended Wallet Balance'),
+                leading: Icon(
+                  Icons.account_balance_wallet,
+                  color: Colors.white,
+                ),
                 trailing: Container(
-                  width:50,
-                  height:50,
+                  width: 50,
+                  height: 50,
                   child: TextFormField(
-                    initialValue:  RecommendedWalletBalance.toString(),
+                    initialValue: RecommendedWalletBalance.toString(),
                     keyboardType: TextInputType.number,
-
-                    onChanged: (s){
-                      setState(()  {
+                    onChanged: (s) {
+                      setState(() {
                         RecommendedWalletBalance = int.parse(s);
                         setRecWalletBal = RecommendedWalletBalance.toString();
                         print(RecommendedWalletBalance);
                       });
                     },
                   ),
-                )  ,
-
+                ),
               ),
-              SettingsTile(title:Text('Revert Threshold'),
-                leading: Icon(Icons.account_balance_wallet,color: Colors.white,),
+              SettingsTile(
+                title: Text('Revert Threshold'),
+                leading: Icon(
+                  Icons.account_balance_wallet,
+                  color: Colors.white,
+                ),
                 trailing: Container(
-                  width:50,
-                  height:50,
+                  width: 50,
+                  height: 50,
                   child: TextFormField(
-                    initialValue:  ,
                     keyboardType: TextInputType.number,
-                    onChanged: (s){
+                    onChanged: (s) {
                       setState(() {
                         threshold = int.parse(s);
 
@@ -66,10 +70,8 @@ class _SettingsState extends State<Settings> {
                       });
                     },
                   ),
-                )  ,
-
+                ),
               ),
-
             ],
           ),
         ],

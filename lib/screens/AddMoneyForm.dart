@@ -5,6 +5,7 @@ import 'package:oktoast/oktoast.dart';
 
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
+import '../widgets/dropdown_widget.dart';
 
 class AddMoneyForm extends StatefulWidget {
   const AddMoneyForm({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
   int amt = 1000;
   String acc = '';
   bool showProgress = false;
+  bool alreadyLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +37,17 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
       ),
       body: Center(
         child: FutureBuilder(
-            future: makePostRequest(null, "/accounts", null, true,
-                context: context),
+            future: !alreadyLoaded
+                ? makePostRequest(null, "/accounts", null, true,
+                    context: context)
+                : null,
             builder: (context, AsyncSnapshot<http.Response> snapshot) {
-              List<DropdownMenuItem<String>> accountsWidget = [];
+              List data = [];
               if (snapshot.hasData) {
                 try {
-                  List data = json.decode(snapshot.data!.body)['data'];
-                  print(data.isEmpty);
+                  data = json.decode(snapshot.data!.body)['data'];
                   if (data.isEmpty) {
                     return const Text("Please add a bank account");
-                  }
-                  acc = json.decode(snapshot.data!.body)['data'][0].toString();
-                  print(json.decode(snapshot.data!.body)['data'][0].toString());
-                  for (var i in json.decode(snapshot.data!.body)['data']) {
-                    accountsWidget.add(DropdownMenuItem(
-                      value: i.toString(),
-                      child: Text(i.toString()),
-                    ));
                   }
                 } catch (e) {
                   return CircularProgressIndicator();
@@ -73,28 +68,17 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                               style: TextStyle(fontSize: 32),
                             )),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Bank Account',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(width: 20),
-                              DropdownButton<String>(
-                                value: acc,
-                                style: const TextStyle(color: Colors.white),
-                                items: accountsWidget,
-                                onChanged: (cur) {
-                                  print(cur);
-                                  setState(() {
-                                    print(acc);
-                                    acc = cur!;
-                                    print(acc);
-                                  });
-                                },
-                              )
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: DropDownFormField(
+                              list: data,
+                              onChange: (data) {
+                                acc = data;
+                                print(acc);
+                              },
+                              hint: "Select account",
+                              title: "Accounts",
+                            ),
                           ),
                           // SizedBox(height:30),
                           Row(

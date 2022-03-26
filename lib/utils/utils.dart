@@ -80,9 +80,7 @@ Future<String> get getRecWalletBal async {
 set setRecWalletBal(String wb) {
   storage.write(key: "RecWallet", value:wb );
 }
-set setUserId(String userId) {
-  storage.write(key: userIdKey, value: userId);
-}
+
 Future<String> get getRevertThreshold async {
   var userId = await storage.read(key: "RecWallet");
   if (userId == null) return "";

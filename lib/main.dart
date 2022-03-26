@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
-      home: Settings()
-      // home:  LoadValidPageWidget(const StartPage(), UnlockPage()),
+      // home: Settings()
+      home:  LoadValidPageWidget(const StartPage(), UnlockPage()),
     );
 
   }

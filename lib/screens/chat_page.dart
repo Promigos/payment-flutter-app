@@ -129,11 +129,13 @@ class _ChatPageState extends State<ChatPage> {
               }
               messages.clear();
               for (var i in json.decode(res.data!.body)) {
+                print(i);
                 messages.add(ChatModel(
                     message: i['message'],
                     date: i['time'].toString(),
                     sender: i['senderID'],
-                    receiver: i['receiverID']));
+                    receiver: i['receiverID'],
+                    messageType: i['messageType'] ?? "text"));
               }
             }
             return res.hasData

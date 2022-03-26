@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -25,6 +26,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Timer _timer;
+  late var balance;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {});
+      print("SET STATE");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +84,7 @@ class _HomePageState extends State<HomePage> {
             future: makePostRequest(null, "/funds/getBalance", null, true),
             builder: (contex, AsyncSnapshot<http.Response> snapshot) {
               print(snapshot.data!.body);
+              balance = json.decode(snapshot.data!.body);
               if (!snapshot.hasData) {
                 return CircularProgressIndicator();
               }
@@ -103,8 +117,7 @@ class _HomePageState extends State<HomePage> {
                                               color: Colors.white
                                                   .withOpacity(0.8))),
                                     ),
-                                    Text(
-                                        "₹ ${json.decode(data['data'].toString())}",
+                                    Text("₹ ${balance['data'].toString()}",
                                         style: TextStyle(
                                             fontSize: 28,
                                             color: colors.primaryTextColor,
@@ -142,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const AddMoney()));
+                                              AddMoney(balance: balance['data'].toString(),)));
                                 }),
                           ),
                         ),
@@ -243,5 +256,11 @@ class _HomePageState extends State<HomePage> {
                 ],
               );
             }));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 }

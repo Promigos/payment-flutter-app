@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/models/chat_model.dart';
 import 'package:payment_app/models/user_model.dart';
 import 'package:payment_app/screens/Transaction.dart';
@@ -80,11 +81,25 @@ class _ChatPageState extends State<ChatPage> {
             icon: const Icon(Icons.more_vert),
             //don't specify icon if you want 3 dot menu
             itemBuilder: (context) => [
-              const PopupMenuItem<int>(
+              PopupMenuItem<int>(
                 value: 0,
-                child: Text(
+                child: const Text(
                   "Block User",
                 ),
+                onTap: () async {
+                  var res = await makePostRequest(
+                      json.encode({"receiverID": widget.userData.userID}),
+                      "/block",
+                      null,
+                      true);
+
+                  if (res.statusCode == 200) {
+                    showToast("Blocked user successfully!");
+                    Navigator.of(context).pop();
+                  } else {
+                    showToast("Could not block user!");
+                  }
+                },
               ),
               const PopupMenuItem<int>(
                 value: 1,
@@ -217,8 +232,6 @@ class _ChatPageState extends State<ChatPage> {
                 : const CircularProgressIndicator();
           }),
     );
-
-
   }
 
   @override

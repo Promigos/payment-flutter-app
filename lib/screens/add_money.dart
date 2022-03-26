@@ -31,7 +31,9 @@ Color chooseColor(amt, thresh) {
 }
 
 class AddMoney extends StatefulWidget {
-  const AddMoney({Key? key}) : super(key: key);
+   AddMoney({Key? key, required this.balance}) : super(key: key);
+
+  String balance;
 
   @override
   _AddMoneyState createState() => _AddMoneyState();
@@ -73,7 +75,9 @@ class _AddMoneyState extends State<AddMoney> {
                     width: 80.0,
                     child: FittedBox(
                       child: FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                         child: const Icon(
                           Icons.arrow_back_rounded,
                           color: Colors.white,
@@ -89,7 +93,7 @@ class _AddMoneyState extends State<AddMoney> {
                 radius: 270.0,
                 lineWidth: 20.0,
                 percent: 0.6,
-                center: Text("Rs 6000",
+                center: Text("Rs ${widget.balance}",
                     style: TextStyle(fontSize: 40, color: color)),
                 progressColor: color,
                 animation: true,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,6 +17,16 @@ class Users extends StatefulWidget {
 }
 
 class _UsersState extends State<Users> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +55,8 @@ class _UsersState extends State<Users> {
                       phoneNumber: i['phone'],
                       email: i['email']));
                 }
-                if(list.isEmpty) return const Center(child: Text("No users found"));
+                if (list.isEmpty)
+                  return const Center(child: Text("No users found"));
               } catch (e) {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -79,9 +91,13 @@ class _UsersState extends State<Users> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Transaction(userData: list[index],)),
+                                    MaterialPageRoute(
+                                        builder: (context) => Transaction(
+                                              userData: list[index],
+                                            )),
                                   );
-                                }, child: const Text("PAY")),
+                                },
+                                child: const Text("PAY")),
                           ),
                           elevation: 5,
                         ),
@@ -92,5 +108,11 @@ class _UsersState extends State<Users> {
                 : const CircularProgressIndicator();
           }),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 }

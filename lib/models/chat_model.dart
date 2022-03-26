@@ -52,8 +52,8 @@ class ChatModel {
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20)),

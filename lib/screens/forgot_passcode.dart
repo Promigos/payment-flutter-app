@@ -27,7 +27,6 @@ class _ForgotPasswordChange extends State<ForgotPasswordChange> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
           height: double.maxFinite,

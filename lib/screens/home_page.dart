@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/add_money.dart';
@@ -9,7 +11,9 @@ import 'package:payment_app/screens/start_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
 import 'package:payment_app/utils/colors.dart' as colors;
+import 'package:http/http.dart' as http;
 
+import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/alert_dialog.dart';
 
@@ -52,9 +56,8 @@ class _HomePageState extends State<HomePage> {
                     showToast("Signed out successfully!");
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) =>
-                            const StartPage()),
-                            (Route<dynamic> route) => false);
+                            builder: (context) => const StartPage()),
+                        (Route<dynamic> route) => false);
                   }, "Are you sure you want to sign out?",
                       "You will be signed out and all data will be lost");
                 },
@@ -64,151 +67,181 @@ class _HomePageState extends State<HomePage> {
                 ))
           ],
         ),
-        body: Column(
-          children: [
-            //TODO: Wallet balance, add funds
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+        body: FutureBuilder(
+            future: makePostRequest(null, "/funds/getBalance", null, true),
+            builder: (contex, AsyncSnapshot<http.Response> snapshot) {
+              print(snapshot.data!.body);
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+              var data = json.decode(snapshot.data!.body);
+              return Column(
                 children: [
+                  //TODO: Wallet balance, add funds
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: double.maxFinite,
+                              child: Card(
+                                elevation: 10,
+                                color: colors.cardColor,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("Balance",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white
+                                                  .withOpacity(0.8))),
+                                    ),
+                                    Text(
+                                        "₹ ${json.decode(data['data'].toString())}",
+                                        style: TextStyle(
+                                            fontSize: 28,
+                                            color: colors.primaryTextColor,
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: SizedBox(
+                            width: double.maxFinite,
+                            child: TextButton(
+                                child: const Text("ADD CREDITS",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.blue)),
+                                style: ButtonStyle(
+                                    padding:
+                                        MaterialStateProperty.all<EdgeInsets>(
+                                            const EdgeInsets.all(15)),
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.red),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            side:
+                                                const BorderSide(color: Colors.blue)))),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AddMoney()));
+                                }),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 4),
+                          child: SizedBox(
+                            width: double.maxFinite,
+                            child: ElevatedButton(
+                                child: const Text("Get QR Code"),
+                                style: ButtonStyle(
+                                    padding:
+                                        MaterialStateProperty.all<EdgeInsets>(
+                                            const EdgeInsets.all(15)),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            side: const BorderSide(
+                                                color: Colors.blue)))),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DisplayUserQR()));
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //TODO: Calculator, friends list, analytics, profile
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: Card(
-                          elevation: 10,
-                          color: colors.cardColor,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("Balance",
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.white.withOpacity(0.8))),
-                              ),
-                              Text("₹ 1000000",
-                                  style: TextStyle(
-                                      fontSize: 28, color: colors.primaryTextColor, fontWeight: FontWeight.bold)),
-                            ],
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                HomeCard(
+                                  title: "Users",
+                                  icon: Icons.supervisor_account_sharp,
+                                  onClick: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const Users()),
+                                    );
+                                  },
+                                ),
+                                HomeCard(
+                                    title: "Calculator",
+                                    icon: Icons.calculate_outlined,
+                                    onClick: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CalculatorList()));
+                                    }),
+                              ],
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                HomeCard(
+                                    title: "Analytics",
+                                    icon: Icons.analytics,
+                                    onClick: () {}),
+                                HomeCard(
+                                    title: "Profile",
+                                    icon: Icons.person,
+                                    onClick: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfilePage()));
+                                    }),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      child: TextButton(
-                          child: const Text("ADD CREDITS",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.blue)),
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.all(15)),
-                              foregroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.red),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: const BorderSide(
-                                          color: Colors.blue)))),
-                          onPressed: () {
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const AddMoney()));
-                          }),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      child: ElevatedButton(
-                          child: const Text("Get QR Code"),
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.all(15)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: const BorderSide(
-                                          color: Colors.blue)))),
-                          onPressed: () {
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => const DisplayUserQR()));
-                          }),
-                    ),
+                    flex: 2,
                   ),
                 ],
-              ),
-            ),
-            //TODO: Calculator, friends list, analytics, profile
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          HomeCard(
-                            title: "Users",
-                            icon: Icons.supervisor_account_sharp,
-                            onClick: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Users()),
-                              );
-                            },
-                          ),
-                          HomeCard(
-                              title: "Calculator",
-                              icon: Icons.calculate_outlined,
-                              onClick: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const CalculatorList()));
-                              }),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          HomeCard(
-                              title: "Analytics",
-                              icon: Icons.analytics,
-                              onClick: () {}),
-                          HomeCard(
-                              title: "Profile",
-                              icon: Icons.person,
-                              onClick: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ProfilePage()));
-                              }),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              flex: 2,
-            ),
-          ],
-        ));
+              );
+            }));
   }
 }

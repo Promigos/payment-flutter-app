@@ -183,6 +183,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                   ),
                 ),
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Forgot Password',
+                    ))
               ],
             ),
           ),

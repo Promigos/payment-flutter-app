@@ -31,7 +31,7 @@ class _UsersState extends State<Users> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Users'),
+        title: const Text("Users"),
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -55,55 +55,16 @@ class _UsersState extends State<Users> {
                       phoneNumber: i['phone'],
                       email: i['email']));
                 }
-                if (list.isEmpty)
+                if (list.isEmpty) {
                   return const Center(child: Text("No users found"));
+                }
               } catch (e) {
                 return const Center(child: CircularProgressIndicator());
               }
             }
             return snapshot.hasData
-                ? ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: Card(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              child: Text(
-                                list[index].name[0],
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ChatPage(
-                                          userData: list[index],
-                                        )),
-                              );
-                            },
-                            title: Text(list[index].name),
-                            subtitle: AutoSizeText(
-                              list[index].email,
-                              maxLines: 1,
-                            ),
-                            trailing: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Transaction(
-                                              userData: list[index],
-                                            )),
-                                  );
-                                },
-                                child: const Text("PAY")),
-                          ),
-                          elevation: 5,
-                        ),
-                      );
-                    },
-                    itemCount: list.length,
+                ? ListWidget(
+                    list: list,
                   )
                 : const CircularProgressIndicator();
           }),
@@ -114,5 +75,96 @@ class _UsersState extends State<Users> {
   void dispose() {
     super.dispose();
     _timer.cancel();
+  }
+}
+
+class ListWidget extends StatefulWidget {
+  ListWidget({Key? key, required this.list}) : super(key: key);
+
+  List<UserModel> list;
+
+  @override
+  State<ListWidget> createState() => _ListWidgetState();
+}
+
+class _ListWidgetState extends State<ListWidget> {
+  late List<UserModel> list;
+
+  @override
+  void initState() {
+    list = widget.list;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            onChanged: (data) {
+              setState(() {
+                list = widget.list
+                    .where((element) => element.name.toLowerCase().contains(data.toLowerCase()))
+                    .toList();
+              });
+            },
+            decoration: const InputDecoration(
+                hintText: 'Search for users',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder()),
+          ),
+        ),
+        Expanded(
+          child: list.isNotEmpty
+              ? ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text(
+                              list[index].name[0],
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                        userData: list[index],
+                                      )),
+                            );
+                          },
+                          title: Text(list[index].name),
+                          subtitle: AutoSizeText(
+                            list[index].email,
+                            maxLines: 1,
+                          ),
+                          trailing: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Transaction(
+                                            userData: list[index],
+                                          )),
+                                );
+                              },
+                              child: const Text("PAY")),
+                        ),
+                        elevation: 5,
+                      ),
+                    );
+                  },
+                  itemCount: list.length,
+                )
+              : const Center(
+                  child: Text("No users found"),
+                ),
+        )
+      ],
+    );
   }
 }

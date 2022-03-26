@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/screens/forgot_password_email.dart';
 import 'package:payment_app/screens/home_page.dart';
 import 'package:payment_app/utils/colors.dart' as colors;
 import 'package:payment_app/utils/constants.dart' as constants;
@@ -11,6 +12,7 @@ import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/custom_sliver.dart';
 import '../widgets/error_box.dart';
+import 'forgot_passcode.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -184,7 +186,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => const ForgotPasswordEmailField()));
+                    },
                     child: const Text(
                       'Forgot Password',
                     ))

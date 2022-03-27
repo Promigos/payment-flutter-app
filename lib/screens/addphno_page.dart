@@ -30,7 +30,7 @@ class _ChangePhNoState extends State<ChangePhNo> {
             height: 50,
           ),
           const Padding(
-            padding: EdgeInsets.all(30.0),
+            padding: EdgeInsets.all(30),
             child: Text('CHANGE PHONE NUMBER',
                 style: TextStyle(
                     fontSize: 20,
@@ -38,7 +38,7 @@ class _ChangePhNoState extends State<ChangePhNo> {
                     fontWeight: FontWeight.bold)),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -49,14 +49,36 @@ class _ChangePhNoState extends State<ChangePhNo> {
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.all(18),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                'SAVE CHANGES',
-                style: TextStyle(
-                  fontSize: 19,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  'GENERATE OTP',
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: TextField(
+              maxLength: 6,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter OTP',
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  'SAVE CHANGES',
                 ),
               ),
             ),

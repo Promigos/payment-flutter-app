@@ -71,6 +71,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: DropDownFormField(
+                              defaultValue: data[0].toString(),
                               list: data,
                               onChange: (data) {
                                 acc = data;
@@ -111,6 +112,10 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                                   const EdgeInsets.only(left: 40, right: 40),
                               child: ElevatedButton(
                                 onPressed: () {
+                                  if(acc.isEmpty){
+                                    showToast("Please select an account");
+                                    return;
+                                  }
                                   displayDialog(context, "Yes", "No", () async {
                                     setState(() {
                                       showProgress = true;

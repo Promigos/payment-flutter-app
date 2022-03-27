@@ -3,10 +3,10 @@ import 'constants.dart';
 
 const storage = FlutterSecureStorage();
 
-clearAllData()
-{
+clearAllData() {
   storage.deleteAll();
 }
+
 ///JWT
 Future<String> get jwtTokenGet async {
   var jwt = await storage.read(key: storageJWTKey);
@@ -71,6 +71,7 @@ Future<String> get getUserId async {
 set setUserId(String userId) {
   storage.write(key: userIdKey, value: userId);
 }
+
 Future<String> get getRecWalletBal async {
   var userId = await storage.read(key: "RecWallet");
   if (userId == null) return "";
@@ -78,7 +79,7 @@ Future<String> get getRecWalletBal async {
 }
 
 set setRecWalletBal(String wb) {
-  storage.write(key: "RecWallet", value:wb );
+  storage.write(key: "RecWallet", value: wb);
 }
 
 Future<String> get getRevertThreshold async {
@@ -88,6 +89,15 @@ Future<String> get getRevertThreshold async {
 }
 
 set setRevertThreshold(String wb) {
-  storage.write(key: "RecWallet", value:wb );
+  storage.write(key: "RecWallet", value: wb);
 }
 
+Future<String> get getPhoneNumber async {
+  var phoneNumber = await storage.read(key: "PHONE");
+  if (phoneNumber == null) return "";
+  return phoneNumber;
+}
+
+set setPhoneNumber(String phoneNumber) {
+  storage.write(key: "PHONE", value: phoneNumber);
+}

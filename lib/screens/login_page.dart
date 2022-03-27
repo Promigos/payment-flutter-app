@@ -154,6 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                                   setName = json.decode(res.body)['name'];
                                   setEmailID = json.decode(res.body)['email'];
                                   setUserId = json.decode(res.body)['id'];
+                                  setPhoneNumber = json.decode(res.body)['phoneNumber'];
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                           builder: (context) =>

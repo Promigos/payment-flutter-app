@@ -32,8 +32,8 @@ class _DisplayUserQRState extends State<DisplayUserQR> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           print(snapshot.data);
           if (snapshot.hasData) {
-            print(snapshot.data.body);
-            return Column(
+            if(snapshot.data.statusCode == 200) {
+              return Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -54,8 +54,9 @@ class _DisplayUserQRState extends State<DisplayUserQR> {
                 Container()
               ],
             );
+            }
           }
-          return Container();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

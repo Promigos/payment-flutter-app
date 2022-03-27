@@ -28,6 +28,17 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Change Password'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            splashRadius: 20,
+            icon: const Icon(
+              Icons.arrow_back_ios_outlined,
+            )),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(

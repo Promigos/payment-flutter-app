@@ -14,6 +14,17 @@ class _profpage extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            splashRadius: 20,
+            icon: const Icon(
+              Icons.arrow_back_ios_outlined,
+            )),
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0),
         child: Column(

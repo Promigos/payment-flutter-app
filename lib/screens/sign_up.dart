@@ -165,13 +165,11 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: 170,
                         child: TextFormField(
+                            obscureText: true,
                             onSaved: (value) {
                               password = value;
                               print(password);
                             },
-                            maxLength: 6,
-                            keyboardType:
-                                const TextInputType.numberWithOptions(),
                             validator: (value) {
                               if (value == "" || value == null) {
                                 return "Enter Password";
@@ -197,12 +195,10 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: 170,
                         child: TextFormField(
+                          obscureText: true,
                             onSaved: (value) {
                               passwordRepeat = value;
                             },
-                            maxLength: 6,
-                            keyboardType:
-                                const TextInputType.numberWithOptions(),
                             validator: (value) {
                               if (value == "" || value == null) {
                                 return "Enter password";
@@ -270,8 +266,6 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   width: 200,
                   child: TextFormField(
-                      maxLength: 6,
-                      keyboardType: const TextInputType.numberWithOptions(),
                       validator: (value) {
                         if (value == "" || value == null) {
                           return "Enter OTP";

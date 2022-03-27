@@ -5,17 +5,19 @@ import 'package:payment_app/utils/colors.dart' as colors;
 class PasswordFormFieldWidget extends StatefulWidget {
   const PasswordFormFieldWidget(
       {Key? key,
-        this.passwordKey,
-        this.controller,
-        this.style,
-        this.validator,
-        required this.label,
-        required this.hintText})
+      this.passwordKey,
+      this.controller,
+      this.onSaved,
+      this.style,
+      this.validator,
+      required this.label,
+      required this.hintText})
       : super(key: key);
   final GlobalKey<FormFieldState>? passwordKey;
   final TextEditingController? controller;
   final TextStyle? style;
   final String? Function(String?)? validator;
+  final Function(String?)? onSaved;
   final String label;
   final String hintText;
 
@@ -35,10 +37,11 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
       controller: widget.controller,
       validator: widget.validator,
       style: widget.style,
+      onSaved: widget.onSaved,
       decoration: InputDecoration(
         label: Text(widget.label,
             style: GoogleFonts.nunito(
-                color: colors.textBoxTextColor, fontSize: 12)),
+                color: colors.textBoxTextColor, fontSize: 17)),
         hintText: widget.hintText,
         suffixIcon: Material(
           color: Colors.transparent,

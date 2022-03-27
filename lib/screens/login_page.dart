@@ -12,6 +12,7 @@ import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/custom_sliver.dart';
 import '../widgets/error_box.dart';
+import '../widgets/password_widget.dart';
 import 'forgot_passcode.dart';
 
 class LoginPage extends StatefulWidget {
@@ -105,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Padding(
                   padding: constants.textFieldPadding,
-                  child: TextFormField(
+                  child: PasswordFormFieldWidget(
                       controller: _passwordController,
                       style: GoogleFonts.montserrat(),
                       validator: (value) {
@@ -114,24 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                         } else {
                           return null;
                         }
-                      },
-                      decoration: InputDecoration(
-                        label: Text('Password',
-                            style: GoogleFonts.nunito(
-                                // color: colors.textBoxTextColor,
-                                fontSize: 17)),
-                        filled: true,
-                        hintText: 'Enter Password',
-                        hintStyle: GoogleFonts.poppins(),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                        // fillColor: colors.textBoxColor,
-                        // focusColor: colors.textBoxColor,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(5)),
-                      )),
+                      }, hintText: 'Enter password', label: 'Password',
+                      ),
                 ),
                 Padding(
                   padding: constants.textFieldPadding,
@@ -180,7 +165,6 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 }
                               }
-                              //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const HomePage()));
                             },
                           ),
                   ),

@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/utils/local_auth.dart';
 import 'package:payment_app/widgets/custom_sliver.dart';
 import 'package:payment_app/utils/constants.dart' as constants;
 import 'package:local_auth/local_auth.dart';
+import 'package:payment_app/widgets/password_widget.dart';
 
+import '../utils/http_modules.dart';
+import '../widgets/error_box.dart';
 import 'home_page.dart';
 
 class UnlockPage extends StatefulWidget {
@@ -19,6 +25,10 @@ class UnlockPage extends StatefulWidget {
 class _UnlockPageState extends State<UnlockPage> {
   final _formKey = GlobalKey<FormState>();
   static final _auth = LocalAuthentication();
+
+  bool showProgress = false;
+  String error = "";
+  String password = "";
 
   hasBiometrics() async {
     bool canCheckBiometrics = await _auth.canCheckBiometrics;
@@ -60,38 +70,28 @@ class _UnlockPageState extends State<UnlockPage> {
                             ),
                             Padding(
                               padding: constants.textFieldPadding,
-                              child: TextFormField(
-                                  style: GoogleFonts.montserrat(),
-                                  validator: (value) {
-                                    if (value == "" || value == null) {
-                                      return "Password cannot be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    label: Text('Password',
-                                        style: GoogleFonts.nunito(
-                                            // color: colors.textBoxTextColor,
-                                            fontSize: 17)),
-                                    filled: true,
-                                    hintText: 'Enter Password',
-                                    hintStyle: GoogleFonts.poppins(),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(5)),
-                                    // fillColor: colors.textBoxColor,
-                                    // focusColor: colors.textBoxColor,
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.circular(5)),
-                                  )),
+                              child: PasswordFormFieldWidget(
+                                onSaved: (data) {
+                                  password = data!;
+                                },
+                                style: GoogleFonts.montserrat(),
+                                validator: (value) {
+                                  if (value == "" || value == null) {
+                                    return "Password cannot be empty";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                hintText: 'Enter Password!',
+                                label: 'Password',
+                              ),
                             ),
                             Row(
                               children: [
                                 if (snapshot.data == true)
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 20, right: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 10),
                                     child: Align(
                                       alignment: Alignment.topRight,
                                       child: ElevatedButton(
@@ -103,7 +103,7 @@ class _UnlockPageState extends State<UnlockPage> {
                                           final isAuthenticated =
                                               await LocaLAuthApi.authenticate();
                                           if (isAuthenticated) {
-                                            Navigator.push(
+                                            Navigator.pushReplacement(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -117,23 +117,59 @@ class _UnlockPageState extends State<UnlockPage> {
                                   ),
                                 Align(
                                   alignment: Alignment.topRight,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(),
-                                    child: const Text(
-                                      'Unlock',
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const HomePage()));
-                                    },
-                                  ),
+                                  child: showProgress
+                                      ? const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : ElevatedButton(
+                                          style: ElevatedButton.styleFrom(),
+                                          child: const Text(
+                                            'Unlock',
+                                          ),
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              _formKey.currentState!.save();
+                                              setState(() {
+                                                showProgress = true;
+                                              });
+                                              var res = await makePostRequest(
+                                                  json.encode(
+                                                      {"password": password}),
+                                                  "/validatePassword",
+                                                  null,
+                                                  true);
+                                              setState(() {
+                                                showProgress = false;
+                                              });
+                                              if (res.statusCode == 200) {
+                                                setState(() {
+                                                  error = "";
+                                                  Navigator.of(context)
+                                                      .pushReplacement(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const HomePage()));
+                                                });
+                                              } else {
+                                                setState(() {
+                                                  error = json.decode(
+                                                      res.body)['message'];
+                                                });
+                                              }
+                                            }
+                                          },
+                                        ),
                                 )
                               ],
                             ),
                           ],
                         ),
+                      ),
+                      Padding(
+                        padding: constants.textFieldPadding,
+                        child: error == "" ? Container() : errorBox(error),
                       ),
                       Expanded(flex: 1, child: Container())
                     ],

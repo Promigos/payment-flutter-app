@@ -83,12 +83,10 @@ class _HomePageState extends State<HomePage> {
         body: FutureBuilder(
             future: makePostRequest(null, "/funds/getBalance", null, true),
             builder: (contex, AsyncSnapshot<http.Response> snapshot) {
-              print(snapshot.data!.body);
               balance = json.decode(snapshot.data!.body);
               if (!snapshot.hasData) {
                 return CircularProgressIndicator();
               }
-              var data = json.decode(snapshot.data!.body);
               return Column(
                 children: [
                   //TODO: Wallet balance, add funds

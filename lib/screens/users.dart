@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import '../models/user_model.dart';
 import '../utils/http_modules.dart';
 import 'Transaction.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class Users extends StatefulWidget {
   const Users({Key? key}) : super(key: key);
@@ -93,6 +94,8 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   void initState() {
     list = widget.list;
+    ContactsService.getContacts().then((value) => {print(value)});
+
   }
 
   @override

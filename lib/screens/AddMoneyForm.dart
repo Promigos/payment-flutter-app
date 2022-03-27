@@ -25,7 +25,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Users'),
+        title: const Text('Add Credits'),
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();

@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:payment_app/screens/accdetails_page.dart';
 import 'package:payment_app/screens/add_accounts_page.dart';
 import 'package:payment_app/screens/update_cred.dart';
 import 'package:payment_app/screens/addphno_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -54,17 +53,20 @@ class _profpage extends State<ProfilePage> {
             ),
             Center(
               child: Row(
-                children: <Widget>[
-                  const SizedBox(width: 60.0),
-                  const Icon(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Icon(
                     Icons.email,
                   ),
-                  const SizedBox(width: 10.0),
-                  const Text(
-                    'shwetha28@gmail.com',
-                    style: TextStyle(
-                      fontSize: 19.0,
-                      letterSpacing: 1.0,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'shwetha28@gmail.com',
+                      style: TextStyle(
+                        fontSize: 19.0,
+                        letterSpacing: 1.0,
+                      ),
                     ),
                   )
                 ],
@@ -79,98 +81,79 @@ class _profpage extends State<ProfilePage> {
               'Phone Number :',
               style: TextStyle(color: Colors.blue[600], fontSize: 22),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 10.0),
             const Text(
               '91452360770',
               style: TextStyle(
                 fontSize: 19.0,
-                letterSpacing: 1.0,
               ),
             ),
-            const SizedBox(height: 20.0),
-            Text(
-              'Current Wallet Account :',
-              style: TextStyle(color: Colors.blue[600], fontSize: 22),
-            ),
-            const SizedBox(height: 20.0),
-            const Text(
-              '91452360770',
-              style: TextStyle(
-                fontSize: 19.0,
-                letterSpacing: 1.0,
+            Expanded(child: Container()),
+            const SizedBox(height: 50.0),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddAccounts()));
+                },
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: const <Widget>[
+                    Icon(
+                      Icons.add_box,
+                      color: Colors.white,
+                      size: 24.0,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("MANAGE ACCOUNTS"),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 30.0),
-            Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+            Row(
               children: [
-                Center(
-                  child:Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ElevatedButton(onPressed: (){Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => AddAccounts()));},
-                          child: Wrap(
-                            children: <Widget>[
-                              Icon(
-                                Icons.add_box,
-                                color: Colors.white,
-                                size: 24.0,
-                              ),
-                              SizedBox(
-                                width:10,
-                              ),
-                              Text("MANAGE ACCOUNTS", style:TextStyle(fontSize:18)),
-                            ],
-                          ),
-                        ),
-                      ),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UpdateCredentials()));
+                    },
+                    child: const Text(
+                      "CHANGE PASSWORD",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
 
-                    ],
+                    ),
                   ),
                 ),
-
                 const SizedBox(
-                  height: 5,
+                  width: 10,
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: ElevatedButton(
-                          onPressed: () {Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => UpdateCredentials()));},
-                          child: const Center(
-                              child: Text(
-                            "CHANGE PASSWORD",
-                          )),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: ElevatedButton(
-                          onPressed: () {Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ChangePhNo()));},
-                          child: const Text(
-                            "CHANGE PHONE NO.",
-                          ),
-                        ),
-                      ),
-                    ],
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ChangePhNo()));
+                    },
+                    child: const Text(
+                      "CHANGE PHONE NUMBER",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
                 ),
               ],
-            ))
+            ),
+            const SizedBox(height: 50,)
           ],
         ),
       ),

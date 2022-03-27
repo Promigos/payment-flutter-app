@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/screens/Settings.dart';
 import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/display_qr_page.dart';
@@ -57,7 +58,13 @@ class _HomePageState extends State<HomePage> {
                   Icons.qr_code,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          const Settings()));
+                },
                 splashRadius: 20,
                 icon: const Icon(
                   Icons.settings,

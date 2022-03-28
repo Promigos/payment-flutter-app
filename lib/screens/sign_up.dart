@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/login_page.dart';
 import 'package:payment_app/utils/constants.dart' as constants;
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
 import '../widgets/custom_sliver.dart';
 import '../widgets/error_box.dart';
-import 'home_page.dart';
 import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
@@ -20,11 +20,19 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
+  final _otpFormState = GlobalKey<FormFieldState>();
 
   String? name, email, phoneNumber, password, passwordRepeat;
   String error = "";
   bool otpButtonDisabled = true;
   bool showProgress = false;
+
+  String OTP = "";
+  String enteredOTP = "";
+
+  void _sendSMS(List<String> phoneNumbers) async {
+    //TODO: Generate OTP here
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +203,8 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         width: 170,
                         child: TextFormField(
-                          obscureText: true,
+                            key: _otpFormState,
+                            obscureText: true,
                             onSaved: (value) {
                               passwordRepeat = value;
                             },
@@ -237,6 +246,7 @@ class _SignUpState extends State<SignUp> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           //TODO: Generate OTP here
+                          _sendSMS([phoneNumber!]);
                           setState(() {
                             otpButtonDisabled = false;
                           });
@@ -266,6 +276,9 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   width: 200,
                   child: TextFormField(
+                      onSaved: (data) {
+                        enteredOTP = data!;
+                      },
                       validator: (value) {
                         if (value == "" || value == null) {
                           return "Enter OTP";
@@ -298,51 +311,58 @@ class _SignUpState extends State<SignUp> {
                             ? null
                             : () async {
                                 //TODO: Verify OTP and get firebase jwt
+                                if (_otpFormState.currentState!.validate()) {
+                                  _otpFormState.currentState!.save();
 
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
+                                  if (enteredOTP == OTP) {
+                                    showToast("OTP MATCH!");
+                                  }
 
-                                  if (password != passwordRepeat) {
-                                    setState(() {
-                                      error = "Passwords don't match";
-                                    });
-                                  } else {
-                                    setState(() {
-                                      error = "";
-                                      showProgress = true;
-                                    });
-                                    var res = await makePostRequest(
-                                        json.encode({
-                                          "password": password,
-                                          "email": email,
-                                          "phoneNumber": phoneNumber,
-                                          "countryCode": 91,
-                                          "userLocation": [],
-                                          "name": name
-                                        }),
-                                        "/register",
-                                        null,
-                                        false);
-                                    setState(() {
-                                      showProgress = false;
-                                    });
-                                    if (res.statusCode == 200) {
-                                      error = '';
-                                      displayDialog(context, "Continue", null,
-                                          () {
-                                        Navigator.of(context).pop();
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const LoginPage()));
-                                      }, "Account has been registered",
-                                          "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+
+                                    if (password != passwordRepeat) {
+                                      setState(() {
+                                        error = "Passwords don't match";
+                                      });
                                     } else {
                                       setState(() {
-                                        error =
-                                            json.decode(res.body)['message'];
+                                        error = "";
+                                        showProgress = true;
                                       });
+                                      var res = await makePostRequest(
+                                          json.encode({
+                                            "password": password,
+                                            "email": email,
+                                            "phoneNumber": phoneNumber,
+                                            "countryCode": 91,
+                                            "userLocation": [],
+                                            "name": name
+                                          }),
+                                          "/register",
+                                          null,
+                                          false);
+                                      setState(() {
+                                        showProgress = false;
+                                      });
+                                      if (res.statusCode == 200) {
+                                        error = '';
+                                        displayDialog(context, "Continue", null,
+                                            () {
+                                          Navigator.of(context).pop();
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage()));
+                                        }, "Account has been registered",
+                                            "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
+                                      } else {
+                                        setState(() {
+                                          error =
+                                              json.decode(res.body)['message'];
+                                        });
+                                      }
                                     }
                                   }
                                 }

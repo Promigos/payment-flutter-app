@@ -30,7 +30,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {});
     });
   }
@@ -231,7 +231,7 @@ class _ChatPageState extends State<ChatPage> {
                       )
                     ],
                   )
-                : const CircularProgressIndicator();
+                : const Center(child: CircularProgressIndicator());
           }),
     );
   }

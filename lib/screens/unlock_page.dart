@@ -154,6 +154,7 @@ class _UnlockPageState extends State<UnlockPage> {
                                                 });
                                               } else {
                                                 setState(() {
+                                                  print(res.body);
                                                   error = json.decode(
                                                       res.body)['message'];
                                                 });
@@ -161,7 +162,8 @@ class _UnlockPageState extends State<UnlockPage> {
                                             }
                                           },
                                         ),
-                                )
+                                ),
+
                               ],
                             ),
                           ],

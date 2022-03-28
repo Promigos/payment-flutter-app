@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/screens/transaction_status.dart';
 
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
@@ -39,7 +40,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
         child: FutureBuilder(
             future: !alreadyLoaded
                 ? makePostRequest(null, "/accounts", null, true,
-                    context: context)
+                context: context)
                 : null,
             builder: (context, AsyncSnapshot<http.Response> snapshot) {
               List data = [];
@@ -50,110 +51,113 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                     return const Text("Please add a bank account");
                   }
                 } catch (e) {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               }
               return snapshot.hasData
                   ? SizedBox(
-                      height: 500,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Center(
-                                child: Text(
-                              'Add Credits',
-                              style: TextStyle(fontSize: 32),
-                            )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: DropDownFormField(
-                              defaultValue: data[0].toString(),
-                              list: data,
-                              onChange: (data) {
-                                acc = data;
-                                print(acc);
-                              },
-                              hint: "Select account",
-                              title: "Accounts",
-                            ),
-                          ),
-                          // SizedBox(height:30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Amount',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(width: 20),
-                              Container(
-                                  height: 50,
-                                  width: 50,
-                                  child: TextFormField(
-                                    initialValue: amt.toString(),
-                                    onChanged: (s) {
-                                      setState(() {
-                                        amt = int.parse(s);
-                                        print(s);
-                                        print("AMT");
-                                      });
-                                    },
-                                  ))
-                            ],
-                          ),
-                          // SizedBox(height:30),
-                          Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 40, right: 40),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if(acc.isEmpty){
-                                    showToast("Please select an account");
-                                    return;
-                                  }
-                                  displayDialog(context, "Yes", "No", () async {
-                                    setState(() {
-                                      showProgress = true;
-                                    });
-                                    print(amt);
-                                    var res = await makePostRequest(
-                                        json.encode({
-                                          "account": int.parse(acc),
-                                          "amount": amt
-                                        }),
-                                        "/funds/addFunds",
-                                        null,
-                                        true);
-                                    setState(() {
-                                      showProgress = false;
-                                    });
-                                    if (res.statusCode == 200) {
-                                      showToast("Funds successfully added!");
-                                      Navigator.pop(context);
-                                    } else {
-                                      showToast(res.body);
-                                    }
-                                    Navigator.pop(context);
-                                  }, "Add credits?",
-                                      "Are you sure you want to add credits to your wallet?");
-                                },
-                                child: const Center(
-                                  child: Text(
-                                    "Add to Wallet",
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                height: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Center(
+                          child: Text(
+                            'Add Credits',
+                            style: TextStyle(fontSize: 32),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: DropDownFormField(
+                        list: data,
+                        onChange: (data) {
+                          acc = data;
+                          print(acc);
+                        },
+                        hint: "Select account",
+                        title: "Accounts",
                       ),
-                    )
-                  : const CircularProgressIndicator();
+                    ),
+                    // SizedBox(height:30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Amount',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(width: 20),
+                        Container(
+                            height: 50,
+                            width: 50,
+                            child: TextFormField(
+                              initialValue: amt.toString(),
+                              onChanged: (s) {
+                                setState(() {
+                                  amt = int.parse(s);
+                                  print(s);
+                                  print("AMT");
+                                });
+                              },
+                            ))
+                      ],
+                    ),
+                    // SizedBox(height:30),
+                    Center(
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.only(left: 40, right: 40),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (acc.isEmpty) {
+                              showToast("Please select an account");
+                              return;
+                            }
+                            displayDialog(context, "Yes", "No", () async {
+                              setState(() {
+                                showProgress = true;
+                              });
+                              print(amt);
+                              var res = await makePostRequest(
+                                  json.encode({
+                                    "account": int.parse(acc),
+                                    "amount": amt
+                                  }),
+                                  "/funds/addFunds",
+                                  null,
+                                  true);
+                              setState(() {
+                                showProgress = false;
+                              });
+                              if (res.statusCode == 200) {
+                                showToast("Credits added successfully!");
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TransactionStatusPage(
+                                                res: res)));
+                                    } else {
+                                showToast(res.body);
+                                }
+                                    Navigator.pop(context);
+                              }, "Add credits?",
+                                "Are you sure you want to add credits to your wallet?");
+                          },
+                          child: const Center(
+                            child: Text(
+                              "Add to Wallet",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : const Center(child: CircularProgressIndicator());
             }),
       ),
     );

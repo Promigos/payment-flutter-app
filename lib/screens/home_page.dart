@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {});
       print("SET STATE");
     });
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Wallet Up'),
+          title: const Text('Home'),
           actions: [
             IconButton(
                 onPressed: () {
@@ -58,13 +58,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.qr_code,
                 )),
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                          const Settings()));
-                },
+                onPressed: () {},
                 splashRadius: 20,
                 icon: const Icon(
                   Icons.settings,
@@ -89,10 +83,15 @@ class _HomePageState extends State<HomePage> {
         ),
         body: FutureBuilder(
             future: makePostRequest(null, "/funds/getBalance", null, true),
-            builder: (contex, AsyncSnapshot<http.Response> snapshot) {
-              balance = json.decode(snapshot.data!.body);
+            builder: (context, AsyncSnapshot<http.Response> snapshot) {
+              print(snapshot.hasData);
+              print(snapshot.error);
               if (!snapshot.hasData) {
-                return CircularProgressIndicator();
+                return Center(child: const CircularProgressIndicator());
+              }
+              else{
+                balance = json.decode(snapshot.data!.body);
+                print(balance);
               }
               return Column(
                 children: [

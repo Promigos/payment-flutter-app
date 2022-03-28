@@ -41,7 +41,7 @@ class _profpage extends State<ProfilePage> {
       body: FutureBuilder(
           future: getData(),
           builder: (context, AsyncSnapshot snapshot) {
-            return Padding(
+            return snapshot.hasData ? Padding(
               padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _profpage extends State<ProfilePage> {
                   )
                 ],
               ),
-            );
+            ) : const CircularProgressIndicator();
           }),
     );
   }

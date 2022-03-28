@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: showProgress
                         ? const Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(),
+                            child: Center(child: CircularProgressIndicator())
                           )
                         : ElevatedButton(
                             style: ElevatedButton.styleFrom(),

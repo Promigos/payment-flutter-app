@@ -12,8 +12,6 @@ class AddAccounts extends StatefulWidget {
   _AddAccountsState createState() => _AddAccountsState();
 }
 
-List acno = ['1230', '2345'];
-
 class _AddAccountsState extends State<AddAccounts> {
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class _AddAccountsState extends State<AddAccounts> {
                 );
               }
             } else {
-              return const CircularProgressIndicator();
+              return Center(child: const CircularProgressIndicator());
             }
           }),
       floatingActionButton: FloatingActionButton.extended(

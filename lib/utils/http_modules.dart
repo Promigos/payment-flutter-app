@@ -48,6 +48,7 @@ Future<http.Response> makePostRequest(
 
     return res;
   } catch (e) {
+    print(e);
     return http.Response(
         json.encode({'message': 'Could not connect to server'}), 408);
   }

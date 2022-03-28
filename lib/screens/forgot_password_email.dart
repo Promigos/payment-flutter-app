@@ -89,7 +89,7 @@ class _ForgotPasswordEmailFieldState extends State<ForgotPasswordEmailField> {
                   child: showProgress
                       ? const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
+                    child: Center(child: CircularProgressIndicator())
                   )
                       : ElevatedButton(
                     onPressed: () async {

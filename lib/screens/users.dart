@@ -23,7 +23,7 @@ class _UsersState extends State<Users> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {});
     });
   }
@@ -67,7 +67,7 @@ class _UsersState extends State<Users> {
                 ? ListWidget(
                     list: list,
                   )
-                : const CircularProgressIndicator();
+                : Center(child: const CircularProgressIndicator());
           }),
     );
   }
@@ -94,7 +94,6 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   void initState() {
     list = widget.list;
-    ContactsService.getContacts().then((value) => {print(value)});
 
   }
 

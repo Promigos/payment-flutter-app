@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "833011794007",
+    "project_id": "promigos-auth",
+    "storage_bucket": "promigos-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833011794007:android:b48e1bbff9872287ebe312",
+        "android_client_info": {
+          "package_name": "com.example.payment_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833011794007-j6bdf2drshs45nnku660migim110l50r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.payment_app",
+            "certificate_hash": "2292323c2b951cfbb44e3e856f508efaad5869f0"
+          }
+        },
+        {
+          "client_id": "833011794007-87ntpsk12a03stk80tor9715vk2dshit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyZ8xQeNS5YP-w9hzXAxJLSW9b8mZH0Rw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833011794007-87ntpsk12a03stk80tor9715vk2dshit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:oktoast/oktoast.dart';
-import 'package:payment_app/screens/transaction_status.dart';
 
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
@@ -134,11 +133,6 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                               });
                               if (res.statusCode == 200) {
                                 showToast("Credits added successfully!");
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TransactionStatusPage(
-                                                res: res)));
                                     } else {
                                 showToast(res.body);
                                 }

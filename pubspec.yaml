@@ -38,6 +38,7 @@ dependencies:
   google_fonts: 2.1.0
   percent_indicator: ^3.4.0
   flutter_beautiful_popup: ^1.7.0
+  flutter_local_notifications: ^9.3.2
   url_launcher: ^6.0.20
   path_provider: ^2.0.0
   contacts_service: ^0.6.3
@@ -46,6 +47,8 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.0.13
+  firebase_messaging: ^11.2.12
+  firebase_core: ^1.14.0
 
 
 dev_dependencies:

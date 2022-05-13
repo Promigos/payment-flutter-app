@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const bool isHTTPS = true;
-const String networkAddress = "wallet-up-api.herokuapp.com";
+const bool isHTTPS = false;
+//wallet-up-api.herokuapp.com
+const String networkAddress = "10.0.2.2:8080";
 const String storageJWTKey = "USER_AUTH_JWT";
 const String nameKey = "USER_NAME";
 const String roleKey = "USER_ROLE";

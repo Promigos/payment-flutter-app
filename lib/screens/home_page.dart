@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:payment_app/screens/Settings.dart';
@@ -33,6 +34,21 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    //TODO: Set firebase token here
+    FirebaseMessaging.instance.getToken().then((value) {
+      makePostRequest(json.encode({"token": value}), "/setToken", null, true, context: context)
+          .then((value) => {
+                if (value.statusCode != 200)
+                  {
+                    showToast(
+                        "Token update failed! Notifications might not work!"),
+
+                  }
+              })
+          .catchError((err) {
+            showToast(err);
+      });
+    });
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {});
       print("SET STATE");
@@ -82,14 +98,13 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: FutureBuilder(
-            future: makePostRequest(null, "/funds/getBalance", null, true),
+            future: makePostRequest(null, "/funds/getBalance", null, true, context: context),
             builder: (context, AsyncSnapshot<http.Response> snapshot) {
               print(snapshot.hasData);
               print(snapshot.error);
               if (!snapshot.hasData) {
                 return Center(child: const CircularProgressIndicator());
-              }
-              else{
+              } else {
                 balance = json.decode(snapshot.data!.body);
                 print(balance);
               }
@@ -158,8 +173,10 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              AddMoney(balance: balance['data'].toString(),)));
+                                          builder: (context) => AddMoney(
+                                                balance:
+                                                    balance['data'].toString(),
+                                              )));
                                 }),
                           ),
                         ),

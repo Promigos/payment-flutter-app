@@ -34,11 +34,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initNotification() async {
     //TODO: Use messaging instance for stuff
-    final FirebaseMessaging messaging = FirebaseMessaging.instance;
-    FirebaseMessaging.instance.getToken().then((value) {
-      String? token = value;
-      print(token);
-    });
+    // final FirebaseMessaging messaging = FirebaseMessaging.instance;
     //messaging.subscribeToTopic('main');
 
 

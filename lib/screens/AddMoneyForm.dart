@@ -127,7 +127,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                                   }),
                                   "/funds/addFunds",
                                   null,
-                                  true);
+                                  true, context: context);
                               setState(() {
                                 showProgress = false;
                               });

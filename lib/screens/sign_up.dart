@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oktoast/oktoast.dart';
@@ -29,10 +30,36 @@ class _SignUpState extends State<SignUp> {
 
   String OTP = "";
   String enteredOTP = "";
+  String verificationId = "";
 
-  void _sendSMS(List<String> phoneNumbers) async {
-    //TODO: Generate OTP here
+  _generateOTP() async {
+    if(phoneNumber == null){
+      showToast("Please enter number");
+      return;
+    }
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+91 ${phoneNumber}',
+      verificationCompleted: (PhoneAuthCredential credential) {
+        showToast("Verification successful!");
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e);
+        showToast("Something went wrong!");
+        if (e.code == 'invalid-phone-number') {
+          showToast("Invalid phone number");
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        showToast("OTP Sent!");
+        print(verificationId);
+        this.verificationId = verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // this.verificationId = verificationId;
+      },
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -245,8 +272,7 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          //TODO: Generate OTP here
-                          _sendSMS([phoneNumber!]);
+                          _generateOTP();
                           setState(() {
                             otpButtonDisabled = false;
                           });
@@ -278,6 +304,9 @@ class _SignUpState extends State<SignUp> {
                   child: TextFormField(
                       onSaved: (data) {
                         enteredOTP = data!;
+                      },
+                      onChanged: (data) {
+                        enteredOTP = data;
                       },
                       validator: (value) {
                         if (value == "" || value == null) {
@@ -311,60 +340,79 @@ class _SignUpState extends State<SignUp> {
                             ? null
                             : () async {
                                 //TODO: Verify OTP and get firebase jwt
-                                if (_otpFormState.currentState!.validate()) {
+                                if (_otpFormState.currentState!.validate() && enteredOTP.isNotEmpty) {
                                   _otpFormState.currentState!.save();
 
-                                  if (enteredOTP == OTP) {
-                                    showToast("OTP MATCH!");
-                                  }
+                                  print(enteredOTP);
 
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
+                                  // var _credential = PhoneAuthProvider.credential(verificationId: actualCode, smsCode: smsCodeController.text);
 
-                                    if (password != passwordRepeat) {
-                                      setState(() {
-                                        error = "Passwords don't match";
-                                      });
-                                    } else {
-                                      setState(() {
-                                        error = "";
-                                        showProgress = true;
-                                      });
-                                      var res = await makePostRequest(
-                                          json.encode({
-                                            "password": password,
-                                            "email": email,
-                                            "phoneNumber": phoneNumber,
-                                            "countryCode": 91,
-                                            "userLocation": [],
-                                            "name": name
-                                          }),
-                                          "/register",
-                                          null,
-                                          false);
-                                      setState(() {
-                                        showProgress = false;
-                                      });
-                                      if (res.statusCode == 200) {
-                                        error = '';
-                                        displayDialog(context, "Continue", null,
-                                            () {
-                                          Navigator.of(context).pop();
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const LoginPage()));
-                                        }, "Account has been registered",
-                                            "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
-                                      } else {
-                                        setState(() {
-                                          error =
+                                  await FirebaseAuth.instance
+                                      .signInWithCredential(PhoneAuthProvider.credential(
+                                      verificationId: verificationId,
+                                      smsCode: enteredOTP))
+                                      .then((value) async {
+                                    if (value.user != null) {
+                                      //TODO: use this token to login
+                                      print(value.user);
+                                      print(await value.user!.getIdToken());
+
+                                      if (_formKey.currentState!.validate()) {
+                                        _formKey.currentState!.save();
+
+                                        if (password != passwordRepeat) {
+                                          setState(() {
+                                            error = "Passwords don't match";
+                                          });
+                                        } else {
+                                          setState(() {
+                                            error = "";
+                                            showProgress = true;
+                                          });
+                                          var res = await makePostRequest(
+                                              json.encode({
+                                                "password": password,
+                                                "email": email,
+                                                "countryCode": 91,
+                                                "userLocation": [],
+                                                "name": name,
+                                                "phoneValidationJWT": await value.user!.getIdToken()
+                                              }),
+                                              "/register",
+                                              null,
+                                              false, context: context);
+                                          setState(() {
+                                            showProgress = false;
+                                          });
+                                          print(res.statusCode);
+                                          print(json.decode(res.body)['message']);
+                                          if (res.statusCode == 200) {
+                                            error = '';
+                                            displayDialog(context, "Continue", null,
+                                                    () {
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                          const LoginPage()));
+                                                }, "Account has been registered",
+                                                "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
+                                          } else {
+                                            setState(() {
+                                              error =
                                               json.decode(res.body)['message'];
-                                        });
+                                            });
+                                          }
+                                        }
                                       }
                                     }
-                                  }
+                                  }).catchError((error, stackTrace) {
+                                    print("outer: $error");
+                                    var errorMessage = error.toString().split("]");
+                                    showToast(errorMessage[1]);
+                                    return;
+                                  });
                                 }
                               },
                         child: const SizedBox(

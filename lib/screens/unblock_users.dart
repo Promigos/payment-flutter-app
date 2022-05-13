@@ -1,64 +1,27 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:payment_app/screens/add_users.dart';
-import 'package:payment_app/screens/chat_page.dart';
 import 'package:http/http.dart' as http;
-import 'package:payment_app/screens/unblock_users.dart';
+import 'package:oktoast/oktoast.dart';
 import '../models/user_model.dart';
 import '../utils/http_modules.dart';
-import 'Transaction.dart';
-import 'package:contacts_service/contacts_service.dart';
 
-class Users extends StatefulWidget {
-  const Users({Key? key}) : super(key: key);
+class UnblockUsers extends StatefulWidget {
+  const UnblockUsers({Key? key}) : super(key: key);
 
   @override
-  State<Users> createState() => _UsersState();
+  State<UnblockUsers> createState() => _UnblockUsersState();
 }
 
-class _UsersState extends State<Users> {
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      setState(() {});
-    });
-  }
+class _UnblockUsersState extends State<UnblockUsers> {
+  late List<UserModel> list;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Users"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const UnblockUsers()),
-              );
-            },
-            icon: const Icon(Icons.person_add_disabled),
-            splashRadius: 20,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AddUsers()),
-              );
-            },
-            icon: const Icon(Icons.supervised_user_circle_outlined),
-            splashRadius: 20,
-          )
-        ],
+        title: const Text("Unblock Users"),
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -69,7 +32,8 @@ class _UsersState extends State<Users> {
             )),
       ),
       body: FutureBuilder(
-          future: makePostRequest(null, "/users", null, true, context: context),
+          future: makePostRequest(null, "/block/getBlockList", null, true,
+              context: context),
           builder: (context, AsyncSnapshot<http.Response> snapshot) {
             List<UserModel> list = [];
             if (snapshot.hasData) {
@@ -96,12 +60,6 @@ class _UsersState extends State<Users> {
                 : Center(child: const CircularProgressIndicator());
           }),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
   }
 }
 
@@ -156,31 +114,26 @@ class _ListWidgetState extends State<ListWidget> {
                               list[index].name[0],
                             ),
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChatPage(
-                                        userData: list[index],
-                                      )),
-                            );
-                          },
                           title: Text(list[index].name),
                           subtitle: AutoSizeText(
                             list[index].email,
                             maxLines: 1,
                           ),
                           trailing: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Transaction(
-                                            userData: list[index],
-                                          )),
-                                );
-                              },
-                              child: const Text("PAY")),
+                              onPressed: () async {
+                                //TODO: Add user here
+                                http.Response res = await makePostRequest(
+                                    json.encode({"receiverID": list[index].userID}),
+                                    "/block/unblock",
+                                    null,
+                                    true,
+                                    context: context);
+
+                                showToast(json.decode(res.body)["message"]);
+                                if (res.statusCode == 200) {
+                                  Navigator.of(context).pop();
+                                }
+                              }, child: const Text("Unblock")),
                         ),
                         elevation: 5,
                       ),

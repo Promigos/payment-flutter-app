@@ -103,7 +103,7 @@ class _ForgotPasswordEmailFieldState extends State<ForgotPasswordEmailField> {
                             }),
                             "/forgotPassword",
                             null,
-                            false);
+                            false, context: context);
                         setState(() {
                           showProgress = false;
                         });

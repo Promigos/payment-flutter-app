@@ -99,7 +99,7 @@ class _TransactionState extends State<Transaction> {
                           }),
                           "/funds/transferAmount",
                           null,
-                          true);
+                          true, context: context);
                       setState(() {
                         showProgress = false;
                       });

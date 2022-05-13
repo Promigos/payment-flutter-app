@@ -154,7 +154,7 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
                                   }),
                                   "/changePassword",
                                   null,
-                                  true);
+                                  true, context: context);
                               setState(() {
                                 showProgress = false;
                               });

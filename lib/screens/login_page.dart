@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                                     }),
                                     "/login",
                                     null,
-                                    false);
+                                    false, context: context);
                                 setState(() {
                                   showProgress = false;
                                 });

@@ -45,6 +45,7 @@ dependencies:
   contacts_service: ^0.6.3
   local_auth: ^1.1.11
   settings_ui: ^2.0.0
+  searchable_dropdown:
   flutter:
     sdk: flutter
   shared_preferences: ^2.0.13

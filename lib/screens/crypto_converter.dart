@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:payment_app/widgets/custom_sliver.dart';
+import 'package:http/http.dart' as http;
 
 
 class CryptoConverter extends StatefulWidget {
@@ -11,10 +12,53 @@ class CryptoConverter extends StatefulWidget {
 }
 
 class _CryptoConverterState extends State<CryptoConverter> {
+  late Future<Response> futureResponse;
   String result = 'We make the conversions easy for you!';
   final _formKey = GlobalKey<FormState>();
-  String FromdropdownValue = 'One';
-  String TodropdownValue = 'One1';
+  String fromDropdownValue = 'AED-United Arab Emirates Dirham';
+  String toDropdownValue = 'ADA-Cardano';
+  List<String> crypto = [
+    'ADA-Cardano',
+    'ADCN-Asiadigicoin',
+    'ADL-Adelphoi',
+    'ADX-AdEx',
+    'ADZ-Adzcoin',
+    'AE-Aeternity',
+    'BNB-Binance Coin',
+    'BQX-Ethos',
+    'BTC-Bitcoin',
+    'BTG-Bitcoin Gold',
+    'CTO-Crypto',
+    'DOGE-Dogecoin',
+    'ETH-Ethereum',
+    'SIB-SibCoin',
+    'TESLA-TeslaCoilCoin',
+    'TRC-TerraCoin',
+    'USDT-Tether',
+    'XLM-Stellar',
+    'XRB-Nano',
+    'XRP-Ripple',
+    'XZC-ZCoin'];
+  List<String> currency = [
+    'AED-United Arab Emirates Dirham',
+    'AUD-Australian Dollar',
+    'CAD-Canadian Dollar',
+    'EUR-Euro',
+    'GBP-British Pound Sterling',
+    'INR-Indian Rupee',
+    'JPY-Japanese Yen',
+    'KPW-North Korean Won',
+    'KRW-South Korean Won',
+    'KWD-Kuwaiti Dinar',
+    'LKR-Sri Lankan Rupee',
+    'MVR-Maldivian Rufiyaa',
+    'NZD-New Zealand Dollar',
+    'OMR-Omani Rial',
+    'PKR-Pakistani Rupee',
+    'QAR-Qatari Rial',
+    'SAR-Saudi Riyal',
+    'SGD-Singapore Dollar'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +79,14 @@ class _CryptoConverterState extends State<CryptoConverter> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 200,
+                            width: 100,
                             child: Text(
                               'Amount to be converted',
                               style: GoogleFonts.montserrat(fontSize: 17),
                             ),
                           ),
                           SizedBox(
-                            width: 120,
+                            width: 200,
                             child: TextFormField(
                               style: GoogleFonts.montserrat(fontSize: 20),
                             )
@@ -56,17 +100,17 @@ class _CryptoConverterState extends State<CryptoConverter> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 200,
+                            width: 100,
                             child: Text(
                               'From \n(fiat currency)',
                               style: GoogleFonts.montserrat(fontSize: 17),
                             ),
                           ),
                           SizedBox(
-                            width: 120,
+                            width: 200,
                             child: DropdownButton<String>(
-                              value: FromdropdownValue,
-                              icon: const Icon(Icons.arrow_downward),
+                              value: fromDropdownValue,
+                              // icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
                               style: GoogleFonts.montserrat(fontSize: 17),
                               underline: Container(
@@ -75,10 +119,10 @@ class _CryptoConverterState extends State<CryptoConverter> {
                               ),
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  FromdropdownValue = newValue!;
+                                  fromDropdownValue = newValue!;
                                 });
                               },
-                              items: <String>['One', 'Two', 'Three', 'Four']
+                              items: currency
                                   .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -96,17 +140,16 @@ class _CryptoConverterState extends State<CryptoConverter> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 200,
+                            width: 100,
                             child: Text(
                               'To \n(crypto currency)',
                               style: GoogleFonts.montserrat(fontSize: 17),
                             ),
                           ),
                           SizedBox(
-                            width: 120,
+                            width: 200,
                             child: DropdownButton<String>(
-                              value: TodropdownValue,
-                              icon: const Icon(Icons.arrow_downward),
+                              value: toDropdownValue,
                               elevation: 16,
                               style: GoogleFonts.montserrat(fontSize: 17),
                               underline: Container(
@@ -115,10 +158,10 @@ class _CryptoConverterState extends State<CryptoConverter> {
                               ),
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  TodropdownValue = newValue!;
+                                  toDropdownValue = newValue!;
                                 });
                               },
-                              items: <String>['One1', 'Two1', 'Three1', 'Four1']
+                              items: crypto
                                   .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -138,10 +181,14 @@ class _CryptoConverterState extends State<CryptoConverter> {
                         children: [
                           ElevatedButton(
                               onPressed: (){
-                                setState(() {});
+                                setState(() {
+                                  List<String> curr = fromDropdownValue.split('-');
+                                  List<String> cry = toDropdownValue.split('-');
+                                  futureResponse = fetchAlbum(cry[0], curr[0]) as Future<Response>;
+                                });
                               },
                               child: const Text(
-                                'Calculate',
+                                'Convert',
                               )),
                           ElevatedButton(
                             child: const Text(
@@ -162,4 +209,24 @@ class _CryptoConverterState extends State<CryptoConverter> {
         ],),
     );
   }
+
+  Future<http.Response> fetchAlbum(String cry, String curr, ) async{
+    return http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr}&symbols=${cry}'));
+    // final response = await http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr[0]}&symbols=${cry[0]}'));
+    // if (response.statusCode == 200) {
+    //   // If the server did return a 200 OK response,
+    //   // then parse the JSON.
+    // } else {
+    //   // If the server did not return a 200 OK response,
+    //   // then throw an exception.
+    //   throw Exception('Failed to load album');
+    // }
+  }
+
 }
+
+class Response {
+//  Class for holding the response returned by the api call after parsing the json
+}
+
+

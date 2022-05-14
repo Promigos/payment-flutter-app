@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'car_loan_calculator.dart';
+import 'crypto_converter.dart';
 import 'home_loan_calculator.dart';
 import 'education_loan_calculator.dart';
 
@@ -18,7 +19,7 @@ class _CalculatorListState extends State<CalculatorList> {
       ['Education Loan EMI Calculator', const EducationLoanCalculator()],
       ['Home Loan EMI Calculator', const HomeLoanCalculator()],
       ['Car Loan EMI Calculator', const CarLoanCalculator()],
-      ['Crypto Currency Converter', const HomeLoanCalculator()],
+      ['Crypto Currency Converter', const CryptoConverter()],
       ['Currency Converter', const HomeLoanCalculator()],
     ];
 

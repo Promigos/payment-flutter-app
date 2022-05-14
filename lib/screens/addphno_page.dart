@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/utils/utils.dart';
 
 class ChangePhNo extends StatefulWidget {
   const ChangePhNo({Key? key}) : super(key: key);
@@ -8,6 +10,10 @@ class ChangePhNo extends StatefulWidget {
 }
 
 class _ChangePhNoState extends State<ChangePhNo> {
+
+
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +43,11 @@ class _ChangePhNoState extends State<ChangePhNo> {
                     letterSpacing: 1.5,
                     fontWeight: FontWeight.bold)),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: TextField(
-              decoration: InputDecoration(
+              controller: controller,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter new phone number',
               ),
@@ -54,7 +61,9 @@ class _ChangePhNoState extends State<ChangePhNo> {
             child: Padding(
               padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showToast("Enter OTP");
+                },
                 child: const Text(
                   'GENERATE OTP',
                 ),
@@ -76,7 +85,11 @@ class _ChangePhNoState extends State<ChangePhNo> {
             child: Padding(
               padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showToast("Changed successfully!");
+                  setPhoneNumber = controller.text;
+                  Navigator.of(context).pop();
+                },
                 child: const Text(
                   'SAVE CHANGES',
                 ),

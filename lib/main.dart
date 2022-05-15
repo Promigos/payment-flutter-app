@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/start_page.dart';
 import 'package:payment_app/screens/unlock_page.dart';
 import 'package:payment_app/widgets/load_valid_page_widget.dart';
@@ -96,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
       // home: Settings()
-      home: LoadValidPageWidget(const StartPage(), UnlockPage()),
+      home: LoadValidPageWidget(const CalculatorList(), UnlockPage()),
     );
   }
 

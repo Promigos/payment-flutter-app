@@ -1,44 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:payment_app/widgets/custom_sliver.dart';
-import 'package:http/http.dart' as http;
 
+import '../widgets/custom_sliver.dart';
 
-class CryptoConverter extends StatefulWidget {
-  const CryptoConverter({Key? key}) : super(key: key);
+class CurrencyConverter extends StatefulWidget {
+  const CurrencyConverter({Key? key}) : super(key: key);
 
   @override
-  _CryptoConverterState createState() => _CryptoConverterState();
+  _CurrencyConverterState createState() => _CurrencyConverterState();
 }
 
-class _CryptoConverterState extends State<CryptoConverter> {
-  late Future<Response> futureResponse;
+class _CurrencyConverterState extends State<CurrencyConverter> {
   String result = 'We make the conversions easy for you!';
   final _formKey = GlobalKey<FormState>();
-  String fromDropdownValue = 'AED-United Arab Emirates Dirham';
-  String toDropdownValue = 'ADA-Cardano';
-  List<String> crypto = [
-    'ADA-Cardano',
-    'ADCN-Asiadigicoin',
-    'ADL-Adelphoi',
-    'ADX-AdEx',
-    'ADZ-Adzcoin',
-    'AE-Aeternity',
-    'BNB-Binance Coin',
-    'BQX-Ethos',
-    'BTC-Bitcoin',
-    'BTG-Bitcoin Gold',
-    'CTO-Crypto',
-    'DOGE-Dogecoin',
-    'ETH-Ethereum',
-    'SIB-SibCoin',
-    'TESLA-TeslaCoilCoin',
-    'TRC-TerraCoin',
-    'USDT-Tether',
-    'XLM-Stellar',
-    'XRB-Nano',
-    'XRP-Ripple',
-    'XZC-ZCoin'];
+  String fromDropdownValue = 'EUR-Euro';
+  String toDropdownValue = 'INR-Indian Rupee';
   List<String> currency = [
     'AED-United Arab Emirates Dirham',
     'AUD-Australian Dollar',
@@ -86,10 +62,10 @@ class _CryptoConverterState extends State<CryptoConverter> {
                             ),
                           ),
                           SizedBox(
-                            width: 200,
-                            child: TextFormField(
-                              style: GoogleFonts.montserrat(fontSize: 20),
-                            )
+                              width: 200,
+                              child: TextFormField(
+                                style: GoogleFonts.montserrat(fontSize: 20),
+                              )
                           ),
                         ],
                       ),
@@ -161,7 +137,7 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                   toDropdownValue = newValue!;
                                 });
                               },
-                              items: crypto
+                              items: currency
                                   .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -184,21 +160,12 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                 setState(() {
                                   List<String> curr = fromDropdownValue.split('-');
                                   List<String> cry = toDropdownValue.split('-');
-                                  futureResponse = fetchAlbum(cry[0], curr[0]) as Future<Response>;
                                 //  todo : api call and get results
                                 });
                               },
                               child: const Text(
                                 'Convert',
-                              )),
-                          ElevatedButton(
-                            child: const Text(
-                              'Get Help',
-                            ),
-                            onPressed: () => setState(() {
-                            // todo : redirect to some crypto info page
-                            }),
-                          ),
+                              ))
                         ],
                       ),
                     ),
@@ -212,24 +179,4 @@ class _CryptoConverterState extends State<CryptoConverter> {
         ],),
     );
   }
-
-  Future<http.Response> fetchAlbum(String cry, String curr, ) async{
-    return http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr}&symbols=${cry}'));
-    // final response = await http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr[0]}&symbols=${cry[0]}'));
-    // if (response.statusCode == 200) {
-    //   // If the server did return a 200 OK response,
-    //   // then parse the JSON.
-    // } else {
-    //   // If the server did not return a 200 OK response,
-    //   // then throw an exception.
-    //   throw Exception('Failed to load album');
-    // }
-  }
-
 }
-
-class Response {
-//  Class for holding the response returned by the api call after parsing the json
-}
-
-

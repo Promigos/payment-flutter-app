@@ -23,11 +23,16 @@ class _AnalyticsMainState extends State<AnalyticsMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Analytics")
+      ),
       body: Center(
 
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+
           children: [
+            SizedBox(height:100),
             DropdownButton(
 
               // Initial Value
@@ -51,6 +56,7 @@ class _AnalyticsMainState extends State<AnalyticsMain> {
                 });
               },
             ),
+            SizedBox(height: 75,),
             Container(
               width:350,
               height: 300,

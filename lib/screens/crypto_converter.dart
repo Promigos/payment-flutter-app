@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:payment_app/widgets/custom_sliver.dart';
 import 'package:http/http.dart' as http;
-
 
 class CryptoConverter extends StatefulWidget {
   const CryptoConverter({Key? key}) : super(key: key);
@@ -38,7 +39,8 @@ class _CryptoConverterState extends State<CryptoConverter> {
     'XLM-Stellar',
     'XRB-Nano',
     'XRP-Ripple',
-    'XZC-ZCoin'];
+    'XZC-ZCoin'
+  ];
   List<String> currency = [
     'AED-United Arab Emirates Dirham',
     'AUD-Australian Dollar',
@@ -59,6 +61,7 @@ class _CryptoConverterState extends State<CryptoConverter> {
     'SAR-Saudi Riyal',
     'SGD-Singapore Dollar'
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,14 +71,20 @@ class _CryptoConverterState extends State<CryptoConverter> {
       body: CustomSliverView(
         columnList: [
           Form(
-              key : _formKey,
+              key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -86,17 +95,22 @@ class _CryptoConverterState extends State<CryptoConverter> {
                             ),
                           ),
                           SizedBox(
-                            width: 200,
-                            child: TextFormField(
-                              style: GoogleFonts.montserrat(fontSize: 20),
-                            )
-                          ),
+                              width: 200,
+                              child: TextFormField(
+                                style: GoogleFonts.montserrat(fontSize: 20),
+                              )),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -122,8 +136,8 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                   fromDropdownValue = newValue!;
                                 });
                               },
-                              items: currency
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: currency.map<DropdownMenuItem<String>>(
+                                  (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -134,9 +148,15 @@ class _CryptoConverterState extends State<CryptoConverter> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -161,8 +181,8 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                   toDropdownValue = newValue!;
                                 });
                               },
-                              items: crypto
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: crypto.map<DropdownMenuItem<String>>(
+                                  (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -173,20 +193,25 @@ class _CryptoConverterState extends State<CryptoConverter> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
-                      child:  Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                              onPressed: (){
-                                setState(() {
-                                  List<String> curr = fromDropdownValue.split('-');
-                                  List<String> cry = toDropdownValue.split('-');
-                                  futureResponse = fetchAlbum(cry[0], curr[0]) as Future<Response>;
-                                //  todo : api call and get results
-                                });
+                              onPressed: () async {
+                                List<String> curr =
+                                    fromDropdownValue.split('-');
+                                List<String> cry = toDropdownValue.split('-');
+                                http.Response response = await http.get(Uri.parse(
+                                    'http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr[0]}&symbols=${cry[0]}'));
+                                var encodedVal = json.decode(response.body);
+                                var finalConversionValue =
+                                    encodedVal["rates"][cry[0]];
+                                //TODO: Use finalConversionValue
                               },
                               child: const Text(
                                 'Convert',
@@ -196,40 +221,32 @@ class _CryptoConverterState extends State<CryptoConverter> {
                               'Get Help',
                             ),
                             onPressed: () => setState(() {
-                            // todo : redirect to some crypto info page
+                              // todo : redirect to some crypto info page
                             }),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 42,),
-                      child: Text(result, style: GoogleFonts.montserrat(fontSize: 17),),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 42,
+                      ),
+                      child: Text(
+                        result,
+                        style: GoogleFonts.montserrat(fontSize: 17),
+                      ),
                     )
                   ],
                 ),
               ))
-        ],),
+        ],
+      ),
     );
   }
-
-  Future<http.Response> fetchAlbum(String cry, String curr, ) async{
-    return http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr}&symbols=${cry}'));
-    // final response = await http.get(Uri.parse('http://api.coinlayer.com/api/live?access_key=7df28c8a855b6a9a7403e915a43003a7&target=${curr[0]}&symbols=${cry[0]}'));
-    // if (response.statusCode == 200) {
-    //   // If the server did return a 200 OK response,
-    //   // then parse the JSON.
-    // } else {
-    //   // If the server did not return a 200 OK response,
-    //   // then throw an exception.
-    //   throw Exception('Failed to load album');
-    // }
-  }
-
 }
 
 class Response {
 //  Class for holding the response returned by the api call after parsing the json
 }
-
-

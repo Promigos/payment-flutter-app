@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:payment_app/screens/add_users.dart';
 import 'package:payment_app/screens/chat_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:payment_app/screens/split_money.dart';
 import 'package:payment_app/screens/unblock_users.dart';
 import '../models/user_model.dart';
 import '../utils/http_modules.dart';
@@ -36,6 +37,17 @@ class _UsersState extends State<Users> {
       appBar: AppBar(
         title: const Text("Users"),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SplitMoney()),
+              );
+            },
+            icon: const Icon(Icons.group_add),
+            splashRadius: 20,
+          ),
           IconButton(
             onPressed: () {
               Navigator.push(

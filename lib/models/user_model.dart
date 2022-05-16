@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class UserModel {
@@ -5,6 +7,7 @@ class UserModel {
   String name;
   String email;
   String phoneNumber;
+  bool isChecked = false;
 
   UserModel(
       {required this.userID,

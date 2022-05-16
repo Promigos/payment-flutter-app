@@ -91,7 +91,8 @@ class _ChatPageState extends State<ChatPage> {
                       json.encode({"receiverID": widget.userData.userID}),
                       "/block",
                       null,
-                      true, context: context);
+                      true,
+                      context: context);
 
                   if (res.statusCode == 200) {
                     showToast("Blocked user successfully!");

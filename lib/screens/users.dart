@@ -41,8 +41,7 @@ class _UsersState extends State<Users> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const SplitMoney()),
+                MaterialPageRoute(builder: (context) => const SplitMoney()),
               );
             },
             icon: const Icon(Icons.group_add),
@@ -52,8 +51,7 @@ class _UsersState extends State<Users> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const UnblockUsers()),
+                MaterialPageRoute(builder: (context) => const UnblockUsers()),
               );
             },
             icon: const Icon(Icons.person_add_disabled),
@@ -63,8 +61,7 @@ class _UsersState extends State<Users> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const AddUsers()),
+                MaterialPageRoute(builder: (context) => const AddUsers()),
               );
             },
             icon: const Icon(Icons.supervised_user_circle_outlined),

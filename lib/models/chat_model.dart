@@ -9,11 +9,11 @@ class ChatModel {
   String messageType;
 
   messageWidget(id) {
-    if(messageType != "text"){
+    if (messageType != "text") {
       if (sender == id) {
         return Container(
           padding:
-          const EdgeInsets.only(left: 50, right: 14, top: 10, bottom: 10),
+              const EdgeInsets.only(left: 50, right: 14, top: 10, bottom: 10),
           child: Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -48,7 +48,7 @@ class ChatModel {
       } else {
         return Container(
           padding:
-          const EdgeInsets.only(left: 14, right: 50, top: 10, bottom: 10),
+              const EdgeInsets.only(left: 14, right: 50, top: 10, bottom: 10),
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
@@ -81,12 +81,11 @@ class ChatModel {
           ),
         );
       }
-    }
-    else{
+    } else {
       if (sender == id) {
         return Container(
           padding:
-          const EdgeInsets.only(left: 50, right: 14, top: 10, bottom: 10),
+              const EdgeInsets.only(left: 50, right: 14, top: 10, bottom: 10),
           child: Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -108,7 +107,7 @@ class ChatModel {
       } else {
         return Container(
           padding:
-          const EdgeInsets.only(left: 14, right: 50, top: 10, bottom: 10),
+              const EdgeInsets.only(left: 14, right: 50, top: 10, bottom: 10),
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
@@ -129,18 +128,16 @@ class ChatModel {
         );
       }
     }
-
   }
 
   get toJson {
     return {};
   }
 
-  ChatModel({
-    required this.message,
-    required this.date,
-    required this.sender,
-    required this.receiver,
-    required this.messageType
-  });
+  ChatModel(
+      {required this.message,
+      required this.date,
+      required this.sender,
+      required this.receiver,
+      required this.messageType});
 }

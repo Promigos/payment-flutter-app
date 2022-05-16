@@ -37,7 +37,11 @@ class _StartPageState extends State<StartPage> {
             ),
             Expanded(child: Container()),
             const Expanded(
-                child: Center(child: FaIcon(FontAwesomeIcons.wallet, size: 150,))),
+                child: Center(
+                    child: FaIcon(
+              FontAwesomeIcons.wallet,
+              size: 150,
+            ))),
             Expanded(
               child: Container(),
             ),

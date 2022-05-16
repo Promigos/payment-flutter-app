@@ -35,6 +35,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
     'SAR-Saudi Riyal',
     'SGD-Singapore Dollar'
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,14 +45,20 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
       body: CustomSliverView(
         columnList: [
           Form(
-              key : _formKey,
+              key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -65,14 +72,19 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                               width: 200,
                               child: TextFormField(
                                 style: GoogleFonts.montserrat(fontSize: 20),
-                              )
-                          ),
+                              )),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -98,8 +110,8 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                                   fromDropdownValue = newValue!;
                                 });
                               },
-                              items: currency
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: currency.map<DropdownMenuItem<String>>(
+                                  (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -110,9 +122,15 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 8,),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 8,
+                      ),
                       child: Row(
                         children: [
                           SizedBox(
@@ -137,8 +155,8 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                                   toDropdownValue = newValue!;
                                 });
                               },
-                              items: currency
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: currency.map<DropdownMenuItem<String>>(
+                                  (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -149,18 +167,21 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 12.0),
-                      child:  Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
-                                  List<String> curr = fromDropdownValue.split('-');
+                                  List<String> curr =
+                                      fromDropdownValue.split('-');
                                   List<String> cry = toDropdownValue.split('-');
-                                //  todo : api call and get results
+                                  //  todo : api call and get results
                                 });
                               },
                               child: const Text(
@@ -170,13 +191,21 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 42,),
-                      child: Text(result, style: GoogleFonts.montserrat(fontSize: 17),),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 42,
+                      ),
+                      child: Text(
+                        result,
+                        style: GoogleFonts.montserrat(fontSize: 17),
+                      ),
                     )
                   ],
                 ),
               ))
-        ],),
+        ],
+      ),
     );
   }
 }

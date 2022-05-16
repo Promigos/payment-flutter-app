@@ -61,7 +61,7 @@ class _ForgotPasswordEmailFieldState extends State<ForgotPasswordEmailField> {
                     },
                     key: _formKey,
                     style:
-                    GoogleFonts.montserrat(color: colors.primaryTextColor),
+                        GoogleFonts.montserrat(color: colors.primaryTextColor),
                     decoration: InputDecoration(
                       label: Text('Email',
                           style: GoogleFonts.raleway(
@@ -88,45 +88,45 @@ class _ForgotPasswordEmailFieldState extends State<ForgotPasswordEmailField> {
                   alignment: Alignment.bottomLeft,
                   child: showProgress
                       ? const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(child: CircularProgressIndicator())
-                  )
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(child: CircularProgressIndicator()))
                       : ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          showProgress = true;
-                        });
-                        var res = await makePostRequest(
-                            json.encode({
-                              "email": _emailController.text,
-                            }),
-                            "/forgotPassword",
-                            null,
-                            false, context: context);
-                        setState(() {
-                          showProgress = false;
-                        });
-                        if (res.statusCode == 200) {
-                          showToast("Verification ID has been sent!");
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ForgotPasswordChange(
-                                          email: _emailController.text)));
-                        } else {
-                          setState(() {
-                            error = json.decode(res.body)['message'];
-                          });
-                        }
-                      }
-                    },
-                    child: Text(
-                      'SEND VERIFICATION KEY',
-                      style:
-                      GoogleFonts.nunito(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                showProgress = true;
+                              });
+                              var res = await makePostRequest(
+                                  json.encode({
+                                    "email": _emailController.text,
+                                  }),
+                                  "/forgotPassword",
+                                  null,
+                                  false,
+                                  context: context);
+                              setState(() {
+                                showProgress = false;
+                              });
+                              if (res.statusCode == 200) {
+                                showToast("Verification ID has been sent!");
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgotPasswordChange(
+                                                email: _emailController.text)));
+                              } else {
+                                setState(() {
+                                  error = json.decode(res.body)['message'];
+                                });
+                              }
+                            }
+                          },
+                          child: Text(
+                            'SEND VERIFICATION KEY',
+                            style:
+                                GoogleFonts.nunito(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                 ),
               )
             ],

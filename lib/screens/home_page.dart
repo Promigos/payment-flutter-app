@@ -36,17 +36,17 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     //TODO: Set firebase token here
     FirebaseMessaging.instance.getToken().then((value) {
-      makePostRequest(json.encode({"token": value}), "/setToken", null, true, context: context)
+      makePostRequest(json.encode({"token": value}), "/setToken", null, true,
+              context: context)
           .then((value) => {
                 if (value.statusCode != 200)
                   {
                     showToast(
                         "Token update failed! Notifications might not work!"),
-
                   }
               })
           .catchError((err) {
-            showToast(err);
+        showToast(err);
       });
     });
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
@@ -99,7 +99,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: FutureBuilder(
-            future: makePostRequest(null, "/funds/getBalance", null, true, context: context),
+            future: makePostRequest(null, "/funds/getBalance", null, true,
+                context: context),
             builder: (context, AsyncSnapshot<http.Response> snapshot) {
               print(snapshot.hasData);
               print(snapshot.error);

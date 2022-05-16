@@ -10,8 +10,6 @@ class ChangePhNo extends StatefulWidget {
 }
 
 class _ChangePhNoState extends State<ChangePhNo> {
-
-
   TextEditingController controller = TextEditingController();
 
   @override
@@ -59,7 +57,8 @@ class _ChangePhNoState extends State<ChangePhNo> {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
+              padding: const EdgeInsets.only(
+                  right: 30, left: 30, bottom: 50, top: 4),
               child: ElevatedButton(
                 onPressed: () {
                   showToast("Enter OTP");
@@ -83,7 +82,8 @@ class _ChangePhNoState extends State<ChangePhNo> {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 30, left: 30, bottom: 50, top: 4),
+              padding: const EdgeInsets.only(
+                  right: 30, left: 30, bottom: 50, top: 4),
               child: ElevatedButton(
                 onPressed: () {
                   showToast("Changed successfully!");

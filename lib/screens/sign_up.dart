@@ -70,7 +70,7 @@ class _SignUpState extends State<SignUp> {
   String verificationId = "";
 
   _generateOTP() async {
-    if(phoneNumber == null){
+    if (phoneNumber == null) {
       showToast("Please enter number");
       return;
     }
@@ -96,7 +96,6 @@ class _SignUpState extends State<SignUp> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +346,8 @@ class _SignUpState extends State<SignUp> {
                             ? null
                             : () async {
                                 //TODO: Verify OTP and get firebase jwt
-                                if (_otpFormState.currentState!.validate() && enteredOTP.isNotEmpty) {
+                                if (_otpFormState.currentState!.validate() &&
+                                    enteredOTP.isNotEmpty) {
                                   _otpFormState.currentState!.save();
 
                                   print(enteredOTP);
@@ -355,9 +355,10 @@ class _SignUpState extends State<SignUp> {
                                   // var _credential = PhoneAuthProvider.credential(verificationId: actualCode, smsCode: smsCodeController.text);
 
                                   await FirebaseAuth.instance
-                                      .signInWithCredential(PhoneAuthProvider.credential(
-                                      verificationId: verificationId,
-                                      smsCode: enteredOTP))
+                                      .signInWithCredential(
+                                          PhoneAuthProvider.credential(
+                                              verificationId: verificationId,
+                                              smsCode: enteredOTP))
                                       .then((value) async {
                                     if (value.user != null) {
                                       //TODO: use this token to login
@@ -383,32 +384,36 @@ class _SignUpState extends State<SignUp> {
                                                 "countryCode": 91,
                                                 "userLocation": [],
                                                 "name": name,
-                                                "phoneValidationJWT": await value.user!.getIdToken()
+                                                "phoneValidationJWT":
+                                                    await value.user!
+                                                        .getIdToken()
                                               }),
                                               "/register",
                                               null,
-                                              false, context: context);
+                                              false,
+                                              context: context);
                                           setState(() {
                                             showProgress = false;
                                           });
                                           print(res.statusCode);
-                                          print(json.decode(res.body)['message']);
+                                          print(
+                                              json.decode(res.body)['message']);
                                           if (res.statusCode == 200) {
                                             error = '';
-                                            displayDialog(context, "Continue", null,
-                                                    () {
-                                                  Navigator.of(context).pop();
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
+                                            displayDialog(
+                                                context, "Continue", null, () {
+                                              Navigator.of(context).pop();
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
                                                           const LoginPage()));
-                                                }, "Account has been registered",
+                                            }, "Account has been registered",
                                                 "Please check your mail and open the verification link within the next 15 minutes to complete registration\n\n(Check your Junk Mail/Spam if you haven't received it yet)");
                                           } else {
                                             setState(() {
-                                              error =
-                                              json.decode(res.body)['message'];
+                                              error = json
+                                                  .decode(res.body)['message'];
                                             });
                                           }
                                         }
@@ -416,7 +421,8 @@ class _SignUpState extends State<SignUp> {
                                     }
                                   }).catchError((error, stackTrace) {
                                     print("outer: $error");
-                                    var errorMessage = error.toString().split("]");
+                                    var errorMessage =
+                                        error.toString().split("]");
                                     showToast(errorMessage[1]);
                                     return;
                                   });

@@ -141,7 +141,8 @@ class _UnlockPageState extends State<UnlockPage> {
                                                       {"password": password}),
                                                   "/validatePassword",
                                                   null,
-                                                  true, context: context);
+                                                  true,
+                                                  context: context);
                                               setState(() {
                                                 showProgress = false;
                                               });
@@ -165,7 +166,6 @@ class _UnlockPageState extends State<UnlockPage> {
                                           },
                                         ),
                                 ),
-
                               ],
                             ),
                           ],

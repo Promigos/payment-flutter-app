@@ -11,6 +11,7 @@ class CarLoanCalculator extends StatefulWidget {
 class _CarLoanCalculatorState extends State<CarLoanCalculator> {
   @override
   Widget build(BuildContext context) {
-    return LoanCalculator(LoanName: 'Car', url: 'https://www.axisbank.com/retail/loans/car-loan');
+    return LoanCalculator(
+        LoanName: 'Car', url: 'https://www.axisbank.com/retail/loans/car-loan');
   }
 }

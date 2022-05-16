@@ -31,7 +31,7 @@ Color chooseColor(amt, thresh) {
 }
 
 class AddMoney extends StatefulWidget {
-   AddMoney({Key? key, required this.balance}) : super(key: key);
+  AddMoney({Key? key, required this.balance}) : super(key: key);
 
   String balance;
 

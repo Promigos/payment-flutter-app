@@ -124,11 +124,13 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
                   ),
                 ),
               ),
-              error == "" ? Container() : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 30),
-                child: errorBox(error),
-              ),
-
+              error == ""
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 30),
+                      child: errorBox(error),
+                    ),
               const SizedBox(
                 height: 40,
               ),
@@ -154,7 +156,8 @@ class _UpdateCredentialsState extends State<UpdateCredentials> {
                                   }),
                                   "/changePassword",
                                   null,
-                                  true, context: context);
+                                  true,
+                                  context: context);
                               setState(() {
                                 showProgress = false;
                               });

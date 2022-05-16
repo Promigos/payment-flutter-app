@@ -17,13 +17,11 @@ class Transaction extends StatefulWidget {
 
 //TODO Add server function to get available bank accounts
 class _TransactionState extends State<Transaction> {
-
   bool showProgress = false;
   int amt = 1000;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -50,17 +48,17 @@ class _TransactionState extends State<Transaction> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Center(
                     child: Text(
-                      'Paying ${widget.userData.name}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 32),
-                    )),
+                  'Paying ${widget.userData.name}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 32),
+                )),
               ),
               Center(
                   child: Text(
-                    widget.userData.phoneNumber,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 20),
-                  )),
+                widget.userData.phoneNumber,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
+              )),
               Expanded(child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +97,8 @@ class _TransactionState extends State<Transaction> {
                           }),
                           "/funds/transferAmount",
                           null,
-                          true, context: context);
+                          true,
+                          context: context);
                       setState(() {
                         showProgress = false;
                       });

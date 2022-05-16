@@ -32,28 +32,31 @@ class _DisplayUserQRState extends State<DisplayUserQR> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           print(snapshot.data);
           if (snapshot.hasData) {
-            if(snapshot.data.statusCode == 200) {
+            if (snapshot.data.statusCode == 200) {
               return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "Scan QR to add user",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      "Scan QR to add user",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                Center(
-                  child: SvgPicture.string(
-                    snapshot.data.body,
-                    width: 250,
+                  Center(
+                    child: SvgPicture.string(
+                      snapshot.data.body,
+                      width: 250,
+                    ),
                   ),
-                ),
-                Container()
-              ],
-            );
+                  Container()
+                ],
+              );
             }
           }
           return const Center(child: CircularProgressIndicator());

@@ -147,7 +147,8 @@ class _AccDetailsState extends State<AccDetails> {
                           }),
                           "/bank/addAccount",
                           null,
-                          true, context: context);
+                          true,
+                          context: context);
                       setState(() {
                         showProgress = false;
                       });

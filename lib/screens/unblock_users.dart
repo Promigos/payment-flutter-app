@@ -123,7 +123,8 @@ class _ListWidgetState extends State<ListWidget> {
                               onPressed: () async {
                                 //TODO: Add user here
                                 http.Response res = await makePostRequest(
-                                    json.encode({"receiverID": list[index].userID}),
+                                    json.encode(
+                                        {"receiverID": list[index].userID}),
                                     "/block/unblock",
                                     null,
                                     true,
@@ -133,7 +134,8 @@ class _ListWidgetState extends State<ListWidget> {
                                 if (res.statusCode == 200) {
                                   Navigator.of(context).pop();
                                 }
-                              }, child: const Text("Unblock")),
+                              },
+                              child: const Text("Unblock")),
                         ),
                         elevation: 5,
                       ),

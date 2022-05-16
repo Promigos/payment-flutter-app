@@ -62,7 +62,7 @@ class _ForgotPasswordChange extends State<ForgotPasswordChange> {
                       }
                     },
                     style:
-                    GoogleFonts.montserrat(color: colors.primaryTextColor),
+                        GoogleFonts.montserrat(color: colors.primaryTextColor),
                   ),
                 ),
                 Padding(
@@ -79,7 +79,7 @@ class _ForgotPasswordChange extends State<ForgotPasswordChange> {
                       }
                     },
                     style:
-                    GoogleFonts.montserrat(color: colors.primaryTextColor),
+                        GoogleFonts.montserrat(color: colors.primaryTextColor),
                   ),
                 ),
                 Padding(
@@ -92,44 +92,44 @@ class _ForgotPasswordChange extends State<ForgotPasswordChange> {
                     alignment: Alignment.bottomLeft,
                     child: showProgress
                         ? const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(child: CircularProgressIndicator())
-                    )
+                            padding: EdgeInsets.all(8.0),
+                            child: Center(child: CircularProgressIndicator()))
                         : ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            showProgress = true;
-                          });
-                          var res = await makePostRequest(
-                              json.encode({
-                                "email": widget.email,
-                                "forgotPasswordCode":
-                                _verificationKeyController.text,
-                                "password": _passwordController.text
-                              }),
-                              "/forgotPasswordVerify",
-                              null,
-                              false, context: context);
-                          setState(() {
-                            showProgress = false;
-                          });
-                          if (res.statusCode == 200) {
-                            showToast("Password changed successfully!");
-                            Navigator.of(context).pop();
-                          } else {
-                            setState(() {
-                              error = json.decode(res.body)['message'];
-                            });
-                          }
-                        }
-                      },
-                      child: Text(
-                        'CHANGE PASSWORD',
-                        style: GoogleFonts.nunito(
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  showProgress = true;
+                                });
+                                var res = await makePostRequest(
+                                    json.encode({
+                                      "email": widget.email,
+                                      "forgotPasswordCode":
+                                          _verificationKeyController.text,
+                                      "password": _passwordController.text
+                                    }),
+                                    "/forgotPasswordVerify",
+                                    null,
+                                    false,
+                                    context: context);
+                                setState(() {
+                                  showProgress = false;
+                                });
+                                if (res.statusCode == 200) {
+                                  showToast("Password changed successfully!");
+                                  Navigator.of(context).pop();
+                                } else {
+                                  setState(() {
+                                    error = json.decode(res.body)['message'];
+                                  });
+                                }
+                              }
+                            },
+                            child: Text(
+                              'CHANGE PASSWORD',
+                              style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                   ),
                 )
               ],

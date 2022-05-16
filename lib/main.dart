@@ -8,7 +8,7 @@ import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/start_page.dart';
 import 'package:payment_app/screens/unlock_page.dart';
 import 'package:payment_app/widgets/load_valid_page_widget.dart';
-
+import 'package:payment_app/screens/Analytics_Main.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
       // home: Settings()
-      home: LoadValidPageWidget(const StartPage(), UnlockPage()),
+      home: AnalyticsMain()//LoadValidPageWidget(const StartPage(), UnlockPage()),
     );
   }
 

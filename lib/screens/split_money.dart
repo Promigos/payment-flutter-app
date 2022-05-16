@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:oktoast/oktoast.dart';
@@ -81,6 +82,12 @@ class _SplitMoneyState extends State<SplitMoney> {
                 )),
           );
 
+          for(var i in list){
+            i.isChecked = false;
+          }
+          setState(() {
+          });
+
         },
         label: const Text("Pay"),
         icon: const Icon(Icons.payment),
@@ -108,9 +115,33 @@ class _ListWidgetState extends State<ListWidget> {
             child: CheckboxListTile(
                 dense: true,
                 //font change
-                title: Text(
-                  widget.list[index].name,
-                  style: const TextStyle(fontSize: 16, letterSpacing: 0.5),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        child: Text(
+                          widget.list[index].name[0],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.list[index].name,
+                                style: const TextStyle(fontSize: 16, letterSpacing: 0.5),
+                              ),
+                              AutoSizeText(widget.list[index].email, overflow: TextOverflow.ellipsis, maxFontSize: 12,)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 value: widget.list[index].isChecked,
                 onChanged: (val) {

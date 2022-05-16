@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: showProgress
                         ? const Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Center(child: CircularProgressIndicator())
+                            child: CircularProgressIndicator()
                           )
                         : ElevatedButton(
                       key: Key('loginbtn'),
@@ -184,8 +184,11 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                           context, MaterialPageRoute(builder: (context) => const ForgotPasswordEmailField()));
                     },
-                    child: const Text(
-                      'Forgot Password',
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Forgot Password',
+                      ),
                     ))
               ],
             ),

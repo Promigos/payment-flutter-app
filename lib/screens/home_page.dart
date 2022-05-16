@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:payment_app/screens/Settings.dart';
 import 'package:payment_app/screens/add_money.dart';
 import 'package:payment_app/screens/calculators.dart';
 import 'package:payment_app/screens/display_qr_page.dart';
 import 'package:payment_app/screens/profile_page.dart';
 import 'package:payment_app/screens/scan_qr_page.dart';
+import 'package:payment_app/screens/send_technical_mail.dart';
 import 'package:payment_app/screens/start_page.dart';
 import 'package:payment_app/screens/users.dart';
 import 'package:payment_app/widgets/home_card.dart';
@@ -75,10 +75,16 @@ class _HomePageState extends State<HomePage> {
                   Icons.qr_code,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SendTechnicalMail()),
+                  );
+                },
                 splashRadius: 20,
                 icon: const Icon(
-                  Icons.settings,
+                  Icons.help,
                 )),
             IconButton(
               key: Key('logout'),

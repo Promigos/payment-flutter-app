@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:payment_app/screens/profile_page.dart';
 import 'package:payment_app/utils/constants.dart';
 
 import '../utils/http_modules.dart';
@@ -52,6 +53,7 @@ class _AccDetailsState extends State<AccDetails> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                key:Key('ean'),
                 onSaved: (data) {
                   accountNumber = data!;
                 },
@@ -77,6 +79,7 @@ class _AccDetailsState extends State<AccDetails> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                key:Key('eed'),
                 onSaved: (data) {
                   expiryDate = data!;
                 },
@@ -85,7 +88,7 @@ class _AccDetailsState extends State<AccDetails> {
                   if (value == "" || value == null) {
                     return "Enter expiry date";
                   } else if (value.length != 4) {
-                    return "Expiry date has to be 3 digits long";
+                    return "Expiry date has to be 4 digits long";
                   } else {
                     return null;
                   }
@@ -102,6 +105,7 @@ class _AccDetailsState extends State<AccDetails> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                key:Key('cvv'),
                 onSaved: (data) {
                   cvv = data!;
                 },
@@ -130,6 +134,7 @@ class _AccDetailsState extends State<AccDetails> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
                 child: ElevatedButton(
+                  key:Key('ebaa'),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
@@ -151,7 +156,10 @@ class _AccDetailsState extends State<AccDetails> {
                           error = "";
                         });
                         showToast("Account added successfully!");
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const ProfilePage()),
+                                (Route<dynamic> route) => false);
                       } else {
                         setState(() {
                           print(res.body);

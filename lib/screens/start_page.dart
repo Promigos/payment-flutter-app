@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:payment_app/screens/sign_up.dart';
 import 'package:payment_app/screens/login_page.dart';
 
+import 'home_page.dart';
+
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
 
@@ -43,6 +45,7 @@ class _StartPageState extends State<StartPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
+                    key:Key('startpgsu'),
                     style: ElevatedButton.styleFrom(),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -55,6 +58,7 @@ class _StartPageState extends State<StartPage> {
                   width: 20,
                 ),
                 ElevatedButton(
+                    key:Key('startpgln'),
                     style: ElevatedButton.styleFrom(),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(

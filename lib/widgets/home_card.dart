@@ -13,6 +13,8 @@ class HomeCard extends StatelessWidget {
     return Expanded(
       child: SizedBox(
         height: double.maxFinite,
+
+
         child: Card(
           color: Color(0xff93A0D0),
           elevation: 0,

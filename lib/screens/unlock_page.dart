@@ -71,6 +71,7 @@ class _UnlockPageState extends State<UnlockPage> {
                             Padding(
                               padding: constants.textFieldPadding,
                               child: PasswordFormFieldWidget(
+                                key:Key('unlockpwd'),
                                 onSaved: (data) {
                                   password = data!;
                                 },
@@ -123,6 +124,7 @@ class _UnlockPageState extends State<UnlockPage> {
                                           child: CircularProgressIndicator(),
                                         )
                                       : ElevatedButton(
+                                          key:Key('unlockbtn'),
                                           style: ElevatedButton.styleFrom(),
                                           child: const Text(
                                             'Unlock',

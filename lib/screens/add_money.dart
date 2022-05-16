@@ -74,7 +74,9 @@ class _AddMoneyState extends State<AddMoney> {
                     height: 80.0,
                     width: 80.0,
                     child: FittedBox(
+
                       child: FloatingActionButton(
+                        key:Key('backff'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
@@ -106,6 +108,7 @@ class _AddMoneyState extends State<AddMoney> {
                       width: 250,
                       height: 60,
                       child: TextButton(
+                        key:Key('addmoneybtn'),
                         onPressed: () {
                           Navigator.push(
                               context,

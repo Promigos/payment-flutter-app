@@ -193,6 +193,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                             SizedBox(
                               width: 120,
                               child: TextFormField(
+                                key:Key('tf1'),
                                 controller: loanController,
                                 style: GoogleFonts.montserrat(fontSize: 20),
                               ),
@@ -201,6 +202,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                         ),
                       ),
                       Slider(
+                        key:Key('s1'),
                         value: _loanAmount.toDouble(),
                         min: 100000,
                         max: 10000000,
@@ -228,6 +230,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                             SizedBox(
                               width: 120,
                               child: TextFormField(
+                                key:Key('tf2'),
                                 controller: tenureController,
                                 style: GoogleFonts.montserrat(fontSize: 20),
                               ),
@@ -236,6 +239,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                         ),
                       ),
                       Slider(
+                        key:Key('s2'),
                         value: _tenureValue.toDouble(),
                         min: 1,
                         max: 30,
@@ -263,6 +267,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                             SizedBox(
                               width: 120,
                               child: TextFormField(
+                                key:Key('tf3'),
                                 controller: rateController,
                                 style: GoogleFonts.montserrat(fontSize: 20),
                               ),
@@ -271,6 +276,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                         ),
                       ),
                       Slider(
+                        key:Key('s3'),
                         value: _rateValue.toDouble(),
                         min: 0.0,
                         max: 15.0,
@@ -290,6 +296,7 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
+                              key:Key('calc'),
                                 onPressed: (){
                                   setState(() {
                                     int p = _loanAmount;

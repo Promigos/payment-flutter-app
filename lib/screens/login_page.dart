@@ -14,7 +14,24 @@ import '../widgets/custom_sliver.dart';
 import '../widgets/error_box.dart';
 import '../widgets/password_widget.dart';
 import 'forgot_passcode.dart';
-
+class EmailFieldValidator{
+  static String? validate(String value){
+    if (value == "" || value == null) {
+      return "Email cannot be empty";
+    } else {
+      return null;
+    }
+  }
+}
+class PasswordFieldValidator{
+  static String? validate(String value){
+    if (value == "" || value == null) {
+      return "Password cannot be empty";
+    } else {
+      return null;
+    }
+  }
+}
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -79,15 +96,10 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: constants.textFieldPadding,
                   child: TextFormField(
+                      key: Key('loginemail'),
                       controller: _emailController,
                       style: GoogleFonts.montserrat(),
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) => EmailFieldValidator.validate(value!),
                       decoration: InputDecoration(
                         label: Text('Phone number or Email ID',
                             style: GoogleFonts.nunito(fontSize: 17)),
@@ -107,15 +119,11 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: constants.textFieldPadding,
                   child: PasswordFormFieldWidget(
+                    key: Key('loginpwd'),
                       controller: _passwordController,
                       style: GoogleFonts.montserrat(),
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Password cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      }, hintText: 'Enter password', label: 'Password',
+                      validator: (value) => PasswordFieldValidator.validate(value!)
+                    , hintText: 'Enter password', label: 'Password',
                       ),
                 ),
                 Padding(
@@ -128,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Center(child: CircularProgressIndicator())
                           )
                         : ElevatedButton(
+                      key: Key('loginbtn'),
                             style: ElevatedButton.styleFrom(),
                             child: const Text(
                               'LOG IN',

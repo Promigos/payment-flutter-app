@@ -19,6 +19,7 @@ class _AddAccountsState extends State<AddAccounts> {
       appBar: AppBar(
         title: const Text('Accounts'),
         leading: IconButton(
+            key:Key('bkp'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -64,6 +65,7 @@ class _AddAccountsState extends State<AddAccounts> {
             }
           }),
       floatingActionButton: FloatingActionButton.extended(
+        key:Key('fabaddacc'),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AccDetails()));

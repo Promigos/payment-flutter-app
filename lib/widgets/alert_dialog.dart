@@ -24,6 +24,7 @@ displayDialog(context, positiveText, negativeText, Function positiveFunction,
         actions: <Widget>[
           negativeText != null
               ? TextButton(
+            key:Key('negab'),
                   child: Text(
                     negativeText,
                     style: GoogleFonts.raleway(),
@@ -34,7 +35,9 @@ displayDialog(context, positiveText, negativeText, Function positiveFunction,
                 )
               : Container(),
           ElevatedButton(
+            key:Key('posab'),
             child: Text(
+
               positiveText,
             ),
             onPressed: () async {
@@ -64,6 +67,7 @@ displayQuitDialog(context, title, subTitle) async {
       ),
       actions: <Widget>[
         TextButton(
+          key:Key('noab'),
           child: Text(
             "No",
             style: GoogleFonts.raleway(),
@@ -73,6 +77,7 @@ displayQuitDialog(context, title, subTitle) async {
           },
         ),
         ElevatedButton(
+          key:Key('yesab'),
           child: const Text(
             "Yes",
           ),

@@ -11,7 +11,44 @@ import '../widgets/alert_dialog.dart';
 import '../widgets/custom_sliver.dart';
 import '../widgets/error_box.dart';
 import 'package:email_validator/email_validator.dart';
-
+import 'package:string_validator/string_validator.dart';
+class NameFieldValidator{
+  static String? validate(String value){
+    if (value == "" || value == null) {
+      return "Please enter a valid name";
+    } else if (isAlpha(value)){
+      return null;
+    }
+    else{
+      return "Only alphabets allowed in name";
+    }
+  }
+}
+class PhoneNumberFieldValidator{
+  static String? validate(String value){
+    if (value == "" || value == null) {
+      return "Please enter a valid phone number";
+    } else if (double.tryParse(value) != null){
+      return null;
+    }
+    else{
+      return "Only numbers allowed in phone number";
+    }
+  }
+}
+class OTPFieldValidator {
+  static String? validate(String value) {
+    if (value == "" || value == null) {
+      return "Enter OTP";
+    }
+    else if (double.tryParse(value) != null){
+      return null;
+    }
+    else{
+      return "Only numbers allowed in OTP";
+    }
+  }
+}
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
@@ -112,13 +149,7 @@ class _SignUpState extends State<SignUp> {
                         name = value;
                       },
                       style: GoogleFonts.montserrat(),
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Please enter a valid name";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) => NameFieldValidator.validate(value!),
                       decoration: InputDecoration(
                         label: Text('Name',
                             style: GoogleFonts.nunito(fontSize: 17)),
@@ -140,13 +171,7 @@ class _SignUpState extends State<SignUp> {
                         phoneNumber = value;
                       },
                       style: GoogleFonts.montserrat(),
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Please enter a valid phone number";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) => PhoneNumberFieldValidator.validate(value!),
                       decoration: InputDecoration(
                         label: Text('Phone number',
                             style: GoogleFonts.nunito(fontSize: 17)),
@@ -205,13 +230,7 @@ class _SignUpState extends State<SignUp> {
                               password = value;
                               print(password);
                             },
-                            validator: (value) {
-                              if (value == "" || value == null) {
-                                return "Enter Password";
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: (value) => PasswordFieldValidator.validate(value!),
                             style: GoogleFonts.nunito(fontSize: 17),
                             decoration: InputDecoration(
                               label: Text('Password',
@@ -235,13 +254,7 @@ class _SignUpState extends State<SignUp> {
                             onSaved: (value) {
                               passwordRepeat = value;
                             },
-                            validator: (value) {
-                              if (value == "" || value == null) {
-                                return "Enter password";
-                              } else {
-                                return null;
-                              }
-                            },
+                            validator: (value) =>PasswordFieldValidator.validate(value!),
                             style: GoogleFonts.nunito(fontSize: 17),
                             decoration: InputDecoration(
                               label: Text('Re-enter Password',
@@ -308,13 +321,7 @@ class _SignUpState extends State<SignUp> {
                       onChanged: (data) {
                         enteredOTP = data;
                       },
-                      validator: (value) {
-                        if (value == "" || value == null) {
-                          return "Enter OTP";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) => OTPFieldValidator.validate(value!),
                       style: GoogleFonts.nunito(fontSize: 17),
                       decoration: InputDecoration(
                         label: Text('OTP',

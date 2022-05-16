@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.settings,
                 )),
             IconButton(
+              key: Key('logout'),
                 onPressed: () {
                   displayDialog(context, "Yes", "No", () {
                     clearAllData();
@@ -152,6 +153,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             width: double.maxFinite,
                             child: TextButton(
+                              key: Key('addcred'),
                                 child: const Text("ADD CREDITS",
                                     style: TextStyle(
                                         fontSize: 14, color: Colors.blue)),
@@ -257,6 +259,7 @@ class _HomePageState extends State<HomePage> {
                                     icon: Icons.analytics,
                                     onClick: () {}),
                                 HomeCard(
+                                  key: Key('profilepg'),
                                     title: "Profile",
                                     icon: Icons.person,
                                     onClick: () {

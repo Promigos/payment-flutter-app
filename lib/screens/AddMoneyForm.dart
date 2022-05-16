@@ -2,10 +2,23 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:oktoast/oktoast.dart';
-
+import 'package:payment_app/screens/add_money.dart';
 import '../utils/http_modules.dart';
 import '../widgets/alert_dialog.dart';
 import '../widgets/dropdown_widget.dart';
+import 'home_page.dart';
+class AmountFieldValidator{
+  static String? validate(String value){
+    if (int.parse(value) <=0) {
+      return "Amount added should be postitive!";
+    } else if (double.tryParse(value) != null){
+      return null;
+    }
+    else{
+      return "Only numbers allowed in phone number";
+    }
+  }
+}
 
 class AddMoneyForm extends StatefulWidget {
   const AddMoneyForm({Key? key}) : super(key: key);
@@ -27,6 +40,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
       appBar: AppBar(
         title: const Text('Add Credits'),
         leading: IconButton(
+            key:Key('addcredbackbtn'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -71,6 +85,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: DropDownFormField(
+                        key:Key('ddff1'),
                         list: data,
                         onChange: (data) {
                           acc = data;
@@ -93,7 +108,9 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                             height: 50,
                             width: 50,
                             child: TextFormField(
+                              key:Key('amttoadd'),
                               initialValue: amt.toString(),
+                              validator: (value) => AmountFieldValidator.validate(value!),
                               onChanged: (s) {
                                 setState(() {
                                   amt = int.parse(s);
@@ -110,6 +127,7 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                         padding:
                         const EdgeInsets.only(left: 40, right: 40),
                         child: ElevatedButton(
+                          key:Key('addtoaccbtn'),
                           onPressed: () {
                             if (acc.isEmpty) {
                               showToast("Please select an account");
@@ -133,10 +151,18 @@ class _AddMoneyFormState extends State<AddMoneyForm> {
                               });
                               if (res.statusCode == 200) {
                                 showToast("Credits added successfully!");
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const HomePage()),
+                                        (Route<dynamic> route) => false);
                                     } else {
                                 showToast(res.body);
                                 }
-                                    Navigator.pop(context);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => const HomePage()),
+                                      (Route<dynamic> route) => false);
+                                    //Navigator.pop(context);
                               }, "Add credits?",
                                 "Are you sure you want to add credits to your wallet?");
                           },

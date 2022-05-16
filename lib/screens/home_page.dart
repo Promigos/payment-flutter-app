@@ -19,6 +19,7 @@ import 'package:http/http.dart' as http;
 import '../utils/http_modules.dart';
 import '../utils/utils.dart';
 import '../widgets/alert_dialog.dart';
+import 'Analytics_Main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -258,7 +259,13 @@ class _HomePageState extends State<HomePage> {
                                 HomeCard(
                                     title: "Analytics",
                                     icon: Icons.analytics,
-                                    onClick: () {}),
+                                    onClick: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AnalyticsMain()));
+                                    }),
                                 HomeCard(
                                   key: Key('profilepg'),
                                     title: "Profile",

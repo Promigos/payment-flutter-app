@@ -212,6 +212,7 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                 var finalConversionValue =
                                     encodedVal["rates"][cry[0]];
                                 finalConversionValue = int.parse(finalConversionValue);
+                                int rate = finalConversionValue;
 
                               },
                               child: const Text(

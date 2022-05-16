@@ -182,6 +182,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                                       fromDropdownValue.split('-');
                                   List<String> cry = toDropdownValue.split('-');
                                   //  todo : api call and get results
+                                //  https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}
                                 });
                               },
                               child: const Text(

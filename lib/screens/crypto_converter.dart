@@ -14,6 +14,8 @@ class CryptoConverter extends StatefulWidget {
 
 class _CryptoConverterState extends State<CryptoConverter> {
   late Future<Response> futureResponse;
+  final amountController = TextEditingController();
+  double amount = 0;
   String result = 'We make the conversions easy for you!';
   final _formKey = GlobalKey<FormState>();
   String fromDropdownValue = 'AED-United Arab Emirates Dirham';
@@ -97,7 +99,13 @@ class _CryptoConverterState extends State<CryptoConverter> {
                           SizedBox(
                               width: 200,
                               child: TextFormField(
+                                controller: amountController,
                                 style: GoogleFonts.montserrat(fontSize: 20),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    amount = double.parse(newValue);
+                                  });
+                                }
                               )),
                         ],
                       ),
@@ -212,8 +220,10 @@ class _CryptoConverterState extends State<CryptoConverter> {
                                 var finalConversionValue =
                                     encodedVal["rates"][cry[0]];
                                 finalConversionValue = int.parse(finalConversionValue);
-                                int rate = finalConversionValue;
-
+                                double rate = amount/finalConversionValue;
+                                setState(() {
+                                  result = "$amount ${curr[0]} would get you $rate ${cry[0]}";
+                                });
                               },
                               child: const Text(
                                 'Convert',

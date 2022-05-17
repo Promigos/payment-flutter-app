@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.dark(),
       //TODO: change to login / signup page and send to home page if token found
       // home: Settings()
-      home: AnalyticsMain()//LoadValidPageWidget(const StartPage(), UnlockPage()),
+        home: LoadValidPageWidget(const StartPage(), UnlockPage()),
     );
   }
 

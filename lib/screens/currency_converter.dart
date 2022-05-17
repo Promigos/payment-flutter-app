@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/custom_sliver.dart';
+import 'package:http/http.dart' as http;
 
 class CurrencyConverter extends StatefulWidget {
   const CurrencyConverter({Key? key}) : super(key: key);
@@ -11,6 +14,10 @@ class CurrencyConverter extends StatefulWidget {
 }
 
 class _CurrencyConverterState extends State<CurrencyConverter> {
+  final amountController = TextEditingController();
+  final toController = TextEditingController();
+  final fromController = TextEditingController();
+  double amount = 0;
   String result = 'We make the conversions easy for you!';
   final _formKey = GlobalKey<FormState>();
   String fromDropdownValue = 'EUR-Euro';
@@ -65,13 +72,20 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                             width: 100,
                             child: Text(
                               'Amount to be converted',
+
                               style: GoogleFonts.montserrat(fontSize: 17),
                             ),
                           ),
                           SizedBox(
                               width: 200,
                               child: TextFormField(
-                                style: GoogleFonts.montserrat(fontSize: 20),
+                                  controller: amountController,
+                                  style: GoogleFonts.montserrat(fontSize: 20),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      amount = double.parse(newValue);
+                                    });
+                                  }
                               )),
                         ],
                       ),
@@ -177,12 +191,21 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                setState(() {
-                                  List<String> curr =
+                                setState(() async {
+                                  List<String> from =
                                       fromDropdownValue.split('-');
-                                  List<String> cry = toDropdownValue.split('-');
+                                  List<String> to = toDropdownValue.split('-');
                                   //  todo : api call and get results
-                                //  https://api.apilayer.com/exchangerates_data/convert?to={to}&from={from}&amount={amount}
+                                //  https://api.apilayer.com/exchangerates_data/convert?apikey=Zwp1LIatOupJLlvmVplLEZ3rZVS8cE4p&to=INR&from=GBP&amount=200
+                                  http.Response response = await http.get(Uri.parse(
+                                      'https://api.apilayer.com/exchangerates_data/convert?apikey=Zwp1LIatOupJLlvmVplLEZ3rZVS8cE4p&to=${to[0]}&from=${from[0]}&amount=$amount'));
+                                  var encodedVal = json.decode(response.body);
+                                  var finalConversionValue =
+                                  encodedVal["result"];
+                                  finalConversionValue = int.parse(finalConversionValue);
+                                  setState(() {
+                                    result = "$amount ${to[0]} would get you $finalConversionValue ${from[0]}";
+                                  });
                                 });
                               },
                               child: const Text(
